@@ -7,17 +7,29 @@
     <meta name="description" content="Personal portfolio of He Jinming.">
     
     <style>
-        /* CSS Variables */
+        /* CSS Variables - Light Mode */
         :root {
             --bg-color: #fcfcfc;
-            --text-main: #1a1a1a;
-            --text-muted: #52525b;
+            --text-main: #3f3f46; /* Updated to Dark Gray */
+            --text-muted: #64748b;
             --accent-color: #2563eb;
             --accent-hover: #1d4ed8;
             --card-bg: #ffffff;
             --border-color: #e4e4e7;
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            /* Updated font-family for Aptos */
+            --font-family: Aptos, "Aptos Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --transition-speed: 0.3s;
+        }
+
+        /* CSS Variables - Dark Mode */
+        html[data-theme="dark"] {
+            --bg-color: #0f0f0f;
+            --text-main: #e4e4e7;
+            --text-muted: #a1a1aa;
+            --accent-color: #60a5fa;
+            --accent-hover: #93bbfd;
+            --card-bg: #1a1a1a;
+            --border-color: #27272a;
         }
 
         /* Base Styles */
@@ -30,12 +42,10 @@
             scroll-behavior: smooth;
         }
 
-        /* Language Toggle Logic */
-        .zh { display: none; }
-        body[data-lang="zh"] .zh { display: inline-block; }
-        body[data-lang="zh"] .en { display: none; }
-        body[data-lang="zh"] div.zh, body[data-lang="zh"] p.zh, body[data-lang="zh"] h1.zh, body[data-lang="zh"] h2.zh, body[data-lang="zh"] h3.zh, body[data-lang="zh"] h4.zh { display: block; }
-        body[data-lang="zh"] li.zh { display: list-item; }
+        /* Smooth Dark Mode Transitions */
+        body, .card, nav, input, textarea, button, .badge, .tag, footer {
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
 
         /* Typography */
         h1, h2, h3, h4 { font-weight: 600; line-height: 1.2; }
@@ -56,17 +66,23 @@
             z-index: 1000;
             padding: 1rem 0;
         }
+        html[data-theme="dark"] nav { background: rgba(15, 15, 15, 0.9); }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
         .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
-        .nav-links a:hover { color: var(--text-main); }
-        .lang-toggle {
+        .nav-links > a { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+        .nav-links > a:hover { color: var(--text-main); }
+        
+        .controls { display: flex; gap: 0.6rem; align-items: center; }
+        .pill-btn {
             background: none; border: 1px solid var(--border-color);
             padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer;
             font-size: 0.8rem; font-weight: 600; color: var(--text-main);
             transition: all var(--transition-speed);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
         }
-        .lang-toggle:hover { background: var(--border-color); }
+        .pill-btn:hover { background: var(--border-color); }
+        #theme-toggle { padding: 0.4rem; border-radius: 50%; width: 34px; height: 34px; }
 
         /* Sections & Spacing */
         section { 
@@ -88,14 +104,18 @@
 
         /* Hero Section */
         .hero { padding-top: 13rem !important; padding-bottom: 8rem; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
-        .hero h1 { font-size: 3.5rem; letter-spacing: -0.02em; margin-bottom: 2rem; }
+        .hero h1 { font-size: 3.5rem; letter-spacing: -0.02em; margin-bottom: 2rem; font-family: 'Georgia', 'Times New Roman', serif; font-style: italic; font-weight: 400; }
         .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin-bottom: 2.5rem; }
-        .btn-primary { display: inline-block; background: var(--text-main); color: #fff; padding: 0.8rem 1.5rem; border-radius: 6px; font-weight: 500; margin-right: 1rem; transition: background 0.3s; }
-        .btn-primary:hover { background: #333; color: #fff; }
+        
+        .btn-primary { display: inline-block; background: var(--text-main); color: #fff; padding: 0.8rem 1.5rem; border-radius: 6px; font-weight: 500; margin-right: 1rem; transition: background 0.3s, color 0.3s; }
+        .btn-primary:hover { background: #27272a; color: #fff; } /* Softened Hover */
+        html[data-theme="dark"] .btn-primary { background: #e4e4e7; color: #0f0f0f; }
+        html[data-theme="dark"] .btn-primary:hover { background: #c4c4c7; color: #000; }
+        
         .btn-secondary { display: inline-block; color: var(--text-main); font-weight: 500; transition: color 0.3s; }
         .btn-secondary:hover { color: var(--accent-color); }
 
-        /* Badge Styling (About Me 技能标签) */
+        /* Badge Styling */
         .badge-container { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2rem; }
         .badge {
             font-size: 0.9rem; padding: 0.4rem 1rem;
@@ -105,17 +125,23 @@
             border-radius: 20px; font-weight: 500;
             display: flex; align-items: center; gap: 0.4rem;
         }
+        html[data-theme="dark"] .badge {
+            background: rgba(96,165,250,0.1);
+            border-color: rgba(96,165,250,0.2);
+            color: var(--accent-color);
+        }
 
         /* Card System */
         .card-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
         @media (min-width: 768px) {
             .card-grid { grid-template-columns: 1fr 1fr; }
         }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.2rem; display: flex; flex-direction: column; }
         .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.04); border-color: #d4d4d8; }
+        html[data-theme="dark"] .card:hover { border-color: #3f3f46; box-shadow: 0 12px 24px rgba(0,0,0,0.4); }
         
         .card-meta { margin-bottom: 1.2rem; }
-        .card-date { font-size: 0.7rem; font-weight: 600; color: var(--text-main); }
+        .card-date { font-size: 0.85rem; font-weight: 600; color: var(--text-main); }
         .card-location { font-size: 0.85rem; color: var(--text-muted); }
         
         .card-title { font-size: 1.25rem; margin-bottom: 0.5rem; }
@@ -124,160 +150,249 @@
 
         /* Highlight box in card (Awards) */
         .card-award {
-            margin-top: 1.2rem;
-            display: inline-flex;
-            align-self: flex-start;
-            background: #f0fdf4; 
-            color: #166534; 
-            padding: 0.3rem 0.8rem; 
-            border-radius: 8px; 
-            font-size: 0.8rem;
-            font-weight: 600;
+            margin-top: 1.2rem; display: inline-flex; align-self: flex-start;
+            background: #f0fdf4; color: #166534; padding: 0.3rem 0.8rem; 
+            border-radius: 8px; font-size: 0.8rem; font-weight: 600;
             border: 1px solid rgba(22, 101, 52, 0.1);
+        }
+        html[data-theme="dark"] .card-award {
+            background: rgba(34,197,94,0.1); color: #4ade80; border-color: rgba(74,222,128,0.15);
         }
         
         /* Tags */
         .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
         .tag { background: #f4f4f5; color: var(--text-muted); font-size: 0.75rem; padding: 0.3rem 0.7rem; border-radius: 6px; }
+        html[data-theme="dark"] .tag { background: #27272a; color: #a1a1aa; }
 
-        /* Timeline / Experience */
+        /* Project Filter Pills */
+        .filter-container { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .filter-pill {
+            display: inline-block; padding: 0.4rem 1.1rem; border-radius: 20px;
+            border: 1px solid var(--border-color); background: transparent;
+            color: var(--text-muted); font-size: 0.85rem; font-weight: 500;
+            font-family: var(--font-family); cursor: pointer; transition: all 0.3s;
+        }
+        .filter-pill:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .filter-pill.active { background: var(--accent-color); color: #ffffff; border-color: var(--accent-color); }
+        
+        .card-grid .card { transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease; }
+        .card.hidden { opacity: 0; transform: scale(0.95); pointer-events: none; }
+
+        /* Timeline / Experience Accordion */
         .timeline { border-left: 2px solid var(--border-color); padding-left: 2rem; margin-left: 1rem; }
+        html[data-theme="dark"] .timeline { border-color: var(--border-color); }
+        
         .timeline-item { position: relative; margin-bottom: 3.5rem; }
         .timeline-item:last-child { margin-bottom: 0; }
         .timeline-item::before {
             content: ''; position: absolute; left: -2.45rem; top: 0.4rem;
             width: 12px; height: 12px; background: var(--card-bg);
-            border: 2px solid var(--text-muted); border-radius: 50%;
+            border: 2px solid var(--text-muted); border-radius: 50%; transition: border-color 0.3s;
         }
+        html[data-theme="dark"] .timeline-item::before { background: var(--card-bg); border-color: var(--text-muted); }
         .timeline-item:hover::before { border-color: var(--accent-color); }
-        .timeline-date { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; }
+        
+        .timeline-header { position: relative; padding-right: 2rem; }
+        .timeline-date { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .accordion-text {
+            font-size: 0.8rem; font-weight: 500; color: var(--accent-color);
+            cursor: pointer; user-select: none; white-space: nowrap;
+        }
+        
+        .timeline-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
+
+        
+        .timeline-content {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .timeline-item.expanded .timeline-content { max-height: 800px; }
+        .timeline-content .card-subtitle { margin-top: 1rem; }
+
+        #projects .tag { font-style: italic; }
 
         /* Skills Layout */
         .skills-container { display: grid; grid-template-columns: 1fr; gap: 2rem; }
         .skill-category h4 { margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
 
-        /* Footer & Contact Interaction */
+        /* Footer & Contact */
         footer { padding: 6rem 0 4rem 0; background-color: #f8f8f9; border-top: 1px solid var(--border-color); }
+        html[data-theme="dark"] footer { background-color: #0a0a0a; }
         .footer-content { max-width: 900px; margin: 0 auto; padding: 0 2rem; text-align: center; }
         .footer-title { font-size: 1.8rem; font-weight: 600; margin-bottom: 3rem; color: var(--text-main); }
         
         .contact-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; margin-bottom: 4rem; }
         .contact-item { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; min-width: 100px; position: relative; }
-        .contact-icon { width: 56px; height: 56px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); color: var(--text-main); transition: all 0.3s; }
-        .contact-item:hover .contact-icon { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15); color: var(--accent-color); transform: scale(1.05); }
+        .contact-icon { width: 56px; height: 56px; background: var(--card-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); color: var(--text-main); transition: all 0.3s; border: 1px solid var(--border-color); }
+        .contact-item:hover .contact-icon { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15); color: var(--accent-color); transform: scale(1.05); border-color: var(--accent-color); }
         .contact-icon svg { width: 26px; height: 26px; fill: currentColor; }
         
-        .contact-label { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); transition: color 0.3s; }
-        .contact-item:hover .contact-label { color: var(--accent-color); }
+        .contact-label { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); transition: opacity 0.3s, color 0.3s; }
         
-        /* 悬停显示具体账号信息 */
         .contact-info { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 0.8rem; font-weight: 600; color: var(--accent-color); opacity: 0; transition: all 0.3s; pointer-events: none; }
         .contact-item:hover .contact-info { opacity: 1; bottom: -20px; }
         .contact-item:hover .contact-label { opacity: 0; }
 
-        .footer-bottom { border-top: 1px solid #e4e4e7; padding-top: 2rem; color: #a1a1aa; font-size: 0.85rem; }
+        .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 2rem; color: var(--text-muted); font-size: 0.85rem; }
 
         /* Animation */
         .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body data-lang="en">
+<body>
+    <script>
+        // Inline script to prevent flash of incorrect theme on load
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 
     <nav>
         <div class="container nav-content">
             <a href="#" style="font-weight: 700; color: var(--text-main); font-size: 1.1rem;">
-                <span class="en">He Jinming</span>
-                <span class="zh">何金明</span>
+                He Jinming
             </a>
             <div class="nav-links">
-                <a href="#about"><span class="en">About</span><span class="zh">关于</span></a>
-                <a href="#experience"><span class="en">Experience</span><span class="zh">工作经历</span></a>
-                <a href="#projects"><span class="en">Projects</span><span class="zh">项目经历</span></a>
-                <button class="lang-toggle" onclick="toggleLanguage()">
-                    <span class="en">中文</span>
-                    <span class="zh">English</span>
-                </button>
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <div class="controls">
+                    <a href="zh.html" class="pill-btn">中文</a>
+                    <button id="theme-toggle" class="pill-btn" aria-label="Toggle Dark Mode">
+                        <svg id="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                        <svg id="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
     <section id="hero" class="hero container reveal">
-        <h1 class="en">Bridging Data Science <br>and Financial Strategy.</h1>
-        <h1 class="zh">连接数据科学<br>与金融战略。</h1>
-        
-        <p class="en">I am He Jinming, a senior student at Nanjing University, just finishing my exchange study at HKU Business School. I focus on financial modeling and market analysis, and strive to distill complex data into practical business insights.</p>
-        <p class="zh">我是何金明，南京大学在读本科生，刚完成香港大学商学院交换学习。主攻金融建模与市场分析，擅长将繁杂数据提炼为实用商业见解。</p>
-        
+        <h1>Bridging Data Science <br>and Financial Strategy.</h1>
+        <p>I am an undergraduate student at Nanjing University majoring in Finance, and an exchange student at HKU Business School. I focus on financial modeling, market analysis, and strategy consulting, leveraging tools like Python and AI agents to distill complex data into practical business insights.</p>
         <div>
-            <a href="#experience" class="btn-primary">
-                <span class="en">Explore My Work</span>
-                <span class="zh">查看工作经历</span>
-            </a>
-            <a href="#contact" class="btn-secondary">
-                <span class="en">Get in touch &rarr;</span>
-                <span class="zh">与我交流 &rarr;</span>
-            </a>
+            <a href="#contact" class="btn-secondary">Get in touch &rarr;</a>
         </div>
     </section>
 
     <section id="about" class="container reveal">
         <div class="section-header">
-            <span class="section-label"><span class="en">I. Profile</span><span class="zh">I. 简介</span></span>
-            <h2 class="section-title"><span class="en">About Me</span><span class="zh">关于我</span></h2>
+            <span class="section-label">I. Profile</span>
+            <h2 class="section-title">About Me</h2>
         </div>
         
         <div class="badge-container">
-            <span class="badge">💼 <span class="en">Management Consulting</span><span class="zh">管理咨询</span></span>
-            <span class="badge">📊 <span class="en">Financial Modelling</span><span class="zh">金融建模</span></span>
-            <span class="badge">💻 <span class="en">Data Science</span><span class="zh">数据科学</span></span>
-            <span class="badge">🌱 <span class="en">ESG Integration</span><span class="zh">ESG分析</span></span>
-            <span class="badge">🪄 <span class="en">Vibe Coding</span><span class="zh">Vibe Coding</span></span>
+            <span class="badge">💼 <i>Consulting</i></span>
+            <span class="badge">📊 <i>Financial Modelling</i></span>
+            <span class="badge">💻 <i>Data Science</i></span>
+            <span class="badge">🌱 <i>ESG Integration</i></span>
+            <span class="badge">🪄 <i>AI Agents</i></span>
+            <span class="badge">🛠️ <i>Skills Dev & Application</i></span>
         </div>
 
         <div style="width: 100%;">
-            <p class="en" style="margin-bottom: 1.2rem;">I am highly motivated by the intersection of traditional finance and modern technological applications. Currently pursuing my studies in Finance at Nanjing University, I actively utilize tools like Python and web scraping to gather alternative data, bringing an empirical edge to strategic consulting and academic research.</p>
-            <p class="zh" style="margin-bottom: 1.2rem;">我对传统金融与现代技术应用的交叉领域充满热情。目前在南京大学攻读金融学，我积极运用 Python 和网络爬虫等工具收集另类数据，为战略咨询和学术研究提供支持。</p>
+            <p style="margin-bottom: 1.2rem;">I am highly motivated by the intersection of traditional finance and modern technological applications. Currently pursuing my studies in Finance at Nanjing University, I actively utilize tools like Python, web scraping, and AI agent frameworks to gather alternative data, bringing an empirical edge to strategic consulting and academic research.</p>
+            <p>Whenever exploring market conditions and economic variations, I adopt structured analytical thinking to yield practical and valuable results.</p>
+        </div>
+    </section>
 
-            <p class="en">Whenever exploring market conditions and economic variations, I adopt structured analytical thinking to yield practical and valuable results.</p>
-            <p class="zh">依托严谨分析逻辑研判市场与经济变化，专注产出务实有效的研究结论。</p>
+    <section id="education" class="container reveal">
+        <div class="section-header">
+            <span class="section-label">II. Education</span>
+            <h2 class="section-title">Education</h2>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div class="timeline-date">January 2026 – May 2026</div>
+                    <h3 class="card-title">The University of Hong Kong (Exchange)</h3>
+                </div>
+                <div class="timeline-content" style="max-height: 800px;">
+                    <div class="card-subtitle" style="margin-top: 0;">BEcon&Fin: Faculty of Business and Economics</div>
+                    <div class="card-body"><strong>Coursework:</strong> Venture Capital & Private Equity, NLP in Finance & FinTech.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div class="timeline-date">September 2023 – June 2027*</div>
+                    <h3 class="card-title">Nanjing University (Undergraduate)</h3>
+                </div>
+                <div class="timeline-content" style="max-height: 800px;">
+                    <div class="card-subtitle" style="margin-top: 0;">Business School, Major in Finance (GPA: 4.41/5.0 | Rank: 14/34)</div>
+                    <div class="card-body">
+                        • <strong>Awards:</strong> People's Scholarship (Top 40%; 2024, 2025); 2nd Prize of National Undergraduate Mathematical Competition (2025).<br>
+                        • <strong>Coursework:</strong> Probability Theory & Mathematical Statistics (98), Statistics (95), Monetary Finance & Banking (93), Econometrics (93), Macro-Economics (91), Financial Economics (91), Linear Algebra (90), Calculus I & II.
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="experience" class="container reveal">
         <div class="section-header">
-            <span class="section-label"><span class="en">II. Career</span><span class="zh">II. 职业轨迹</span></span>
-            <h2 class="section-title"><span class="en">Internship Experience</span><span class="zh">实习经历</span></h2>
+            <span class="section-label">III. Career</span>
+            <h2 class="section-title">Professional Experience</h2>
         </div>
         
         <div class="timeline">
+            <!-- BCG Timeline Accordion -->
             <div class="timeline-item">
-                <div class="timeline-date"><span class="en">December 2025 – June 2026*</span><span class="zh">2025年12月 – 2026年06月*</span></div>
-                <h3 class="card-title"><span class="en">The Boston Consulting Group (BCG)</span><span class="zh">波士顿咨询公司（BCG）</span></h3>
-                <div class="card-subtitle"><span class="en">Special Part-Time Assistant Program · Shanghai</span><span class="zh">Special Part-Time Assistant · 上海</span></div>
-                <div class="en card-body">
-                    • <strong>Regulatory Data Mining:</strong> Deployed Python scraping to aggregate nationwide administrative penalty data, confirming a post-2024 surge in citations to guide market entry for a pet food client.<br>
-                    • <strong>Competitive Benchmarking:</strong> Synthesized pricing, ratings, and sentiment data from Amazon to identify product value propositions and customer pain points for a lawnmower robotics client.<br>
-                    • <strong>Market Structuring:</strong> Built detailed Marimekko market landscape models based on expert interviews and competitor data for bilingual strategic deliverables.
+                <div class="timeline-header">
+                    <div class="timeline-date">
+                        <span>December 2025 – June 2026*</span>
+                        <span class="accordion-text" data-collapsed="Expand ▾" data-expanded="Collapse ▴">Expand ▾</span>
+                    </div>
+                    <h3 class="card-title">The Boston Consulting Group (BCG)</h3>
                 </div>
-                <div class="zh card-body">
-                    • <strong>监管数据挖掘：</strong> 利用 Python 爬取全国行政处罚数据，证实 2024 年后处罚激增，为宠物食品客户提供市场准入的量化合规避让依据。<br>
-                    • <strong>竞品基准分析：</strong> 综合亚马逊的定价、评分和评论情绪数据，为割草机器人客户识别核心产品卖点和客户痛点。<br>
-                    • <strong>市场结构搭建：</strong> 结合专家访谈复盘和竞争对手数据，独立构建细分赛道的 Marimekko 市场格局模型，并输出中英双语战略交付件。
+                <div class="card-subtitle">Part-Time Assistant Program · Shanghai</div>
+                <div class="timeline-pills">
+                    <span class="tag">🏢 <i>Mgmt Consulting</i></span>
+                    <span class="tag">🐍 <i>Python Scraping</i></span>
+                    <span class="tag">⚖️ <i>Regulatory Analysis</i></span>
+                    <span class="tag">🧭 <i>Customer Journey</i></span>
+                    <span class="tag">🏬 <i>Store Audit</i></span>
+                    <span class="tag">🤖 <i>AI Agents</i></span>
+                    <span class="tag">🛠️ <i>Skills Apps</i></span>
+                </div>
+                <div class="timeline-content">
+                    <div class="card-body">
+                        • <strong>Regulatory Data Analysis:</strong> Identified a post-2024 regulatory enforcement inflection point in China's pet food sector by scraping and analyzing sector-wide administrative penalty data with Python, equipping the team with a quantified risk baseline of the client's regulatory exposure.<br><br>
+                        • <strong>Customer Journey Framework:</strong> Structured a 60-journey customer experience framework for a bank’s customer journey optimization by synthesizing three C-level interviews and desk research into actionable findings, supporting the team’s client deliverable through four rounds of partner feedback and iteration.<br><br>
+                        • <strong>Store Audit:</strong> Audited in-store execution at a menswear brand against management's playbook on sales scripts and merchandising, and profiled four outdoor apparel competitors on product and material, delivering frontline evidence and market context that grounded the team's brand strategy.
+                    </div>
                 </div>
             </div>
 
+            <!-- Tianfeng Timeline Accordion -->
             <div class="timeline-item">
-                <div class="timeline-date"><span class="en">September 2025 – November 2025</span><span class="zh">2025年09月 – 2025年11月</span></div>
-                <h3 class="card-title"><span class="en">Tianfeng Securities Co. Ltd.</span><span class="zh">天风证券</span></h3>
-                <div class="card-subtitle"><span class="en">Fixed Income Research Intern · Shanghai</span><span class="zh">固收组实习生 · 上海</span></div>
-                <div class="en card-body">
-                    • Analyzed LGFV (Local Government Financing Vehicle) funding structures by benchmarking costs across trust, non-standard, and bank loan channels.<br>
-                    • Authored and published research identifying a shift toward low-cost credit and risk-return rebalancing under macro fiscal tightening.
+                <div class="timeline-header">
+                    <div class="timeline-date">
+                        <span>September 2025 – November 2025</span>
+                        <span class="accordion-text" data-collapsed="Expand ▾" data-expanded="Collapse ▴">Expand ▾</span>
+                    </div>
+                    <h3 class="card-title">Tianfeng Securities Co. Ltd.</h3>
                 </div>
-                <div class="zh card-body">
-                    • 通过对比信托（~6%）、非标（~5%）和银行贷款（~3%）等不同渠道的融资成本差异，深度剖析省级城投平台（LGFV）的融资结构。<br>
-                    • 撰写并发表研究推文，揭示在宏观财政紧缩背景下，地方融资向低成本信贷倾斜的趋势及风险收益再平衡特征。
+                <div class="card-subtitle">Intern in Fixed Income Research Group · Shanghai</div>
+                <div class="timeline-pills">
+                    <span class="tag">📊 <i>FICC Research</i></span>
+                    <span class="tag">🏛️ <i>LGFV Credit</i></span>
+                    <span class="tag">📈 <i>ETF Management</i></span>
+                    <span class="tag">💰 <i>Financing</i></span>
+                    <span class="tag">📋 <i>Market Reporting</i></span>
+                </div>
+                <div class="timeline-content">
+                    <div class="card-body">
+                        • <strong>Financing Cost Benchmarking:</strong> Distilled transcripts from 3 Hubei LGFV platforms (>RMB 250bn) into ~30k words of memos, benchmarking financing costs across bank, bond, non-standard, and trust channels to assess refinancing capacity, alongside credit research on 10 water utilities.<br><br>
+                        • <strong>Market Tracking & Reporting:</strong> Managed a daily database of 53 bond ETFs across government, credit, and convertible bonds, tracking AUM, turnover, and volume, and produced 15+ market reports and 20+ credit briefings, developing real-time market sensitivity and risk monitoring discipline.
+                    </div>
                 </div>
             </div>
         </div>
@@ -285,153 +400,147 @@
 
     <section id="projects" class="container reveal">
         <div class="section-header">
-            <span class="section-label"><span class="en">III. Selected Work</span><span class="zh">III. 精选项目</span></span>
-            <h2 class="section-title"><span class="en">Projects & Research</span><span class="zh">科研与项目实践</span></h2>
+            <span class="section-label">IV. Selected Work</span>
+            <h2 class="section-title">Projects & Research</h2>
+        </div>
+
+        <div class="filter-container">
+            <button class="filter-pill active" data-filter="all">All</button>
+            <button class="filter-pill" data-filter="strategy">Strategy</button>
+            <button class="filter-pill" data-filter="esg">ESG</button>
+            <button class="filter-pill" data-filter="quant">Quant & M&A</button>
+            <button class="filter-pill" data-filter="field-research">Field Research</button>
         </div>
 
         <div class="card-grid">
-            <div class="card">
+            <div class="card" data-tags="strategy esg">
                 <div class="card-meta">
-                    <div class="card-date"><span class="en">May 2025</span><span class="zh">2025年05月</span></div>
-                    <div class="card-location"><span class="en">Beijing</span><span class="zh">北京</span></div>
+                    <div class="card-date">May 2025</div>
+                    <div class="card-location">Beijing</div>
                 </div>
-                <h3 class="card-title"><span class="en">Bain Cup Case Competition</span><span class="zh">“贝恩杯”咨询启航案例大赛</span></h3>
+                <h3 class="card-title">The 2025 “Bain Cup” Case Competition</h3>
                 <div class="card-body">
-                    <span class="en">Developed a “Dual-line” growth strategy for AI-enabled ESG consulting in the renewable energy sector utilizing CSMAR, Chindices, and IIGF data.</span>
-                    <span class="zh">利用国泰安、华证指数等数据，为新能源行业的 AI 赋能 ESG 咨询开发“双线”（线上 SaaS + 线下 AI 基站）增长战略。</span>
+                    • Analyzed AI-enabled ESG consulting in the renewable energy sector using CSMAR, Chindices, and IIGF data, and developed a framework of “Market Competition Analysis – Dual-line strategy – Strategy implementation” to formulate growth strategies.<br>
+                    • Concluded that the client should develop online SaaS platforms and onsite AI server base stations, visualizing conclusions into 16 charts using Think-cell & Python for a 21-page deck.
                 </div>
                 <div class="card-award">
-                    🏆 <span class="en">Top 10% Global</span><span class="zh">全球前 10% 优秀案例</span>
+                    🏆 Outstanding Case Report, Top 10%
                 </div>
                 <div class="tags">
                     <span class="tag">Strategy</span> <span class="tag">ESG</span> <span class="tag">Think-cell</span>
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" data-tags="esg quant">
                 <div class="card-meta">
-                    <div class="card-date"><span class="en">October 2024 – November 2025</span><span class="zh">2024年10月 – 2025年11月</span></div>
-                    <div class="card-location"><span class="en">Nanjing</span><span class="zh">南京</span></div>
+                    <div class="card-date">October 2024 – November 2025</div>
+                    <div class="card-location">Nanjing</div>
                 </div>
-                <h3 class="card-title"><span class="en">Smart Logistics & Environment</span><span class="zh">智慧物流与环境绩效研究</span></h3>
+                <h3 class="card-title">Smart Logistics & Environmental Performance</h3>
                 <div class="card-body">
-                    <span class="en">Developed a “Company-City” evaluation model using CSMAR manufacturing data to identify ESG improvements driven by productivity gains.</span>
-                    <span class="zh">构建基于“企业—城市”视角的评估模型，结合 CSMAR 制造业数据与实地调研，验证智慧物流对企业降碳与盈利的成效。</span>
+                    • Developed a “Company-City” ESG evaluation model from CSMAR manufacturing panel data (2010-2023) and a field study in Nanjing.<br>
+                    • Identified ESG improvements driven by productivity gains and cost contraction, delivering 10+ analytical charts and a thematic report with detailed heterogeneity analysis.
                 </div>
                 <div class="card-award">
-                    ⭐ <span class="en">Principal Investigator</span><span class="zh">省级立项主持人</span>
+                    ⭐ Principal Investigator / "Yinxing Cup" Award
                 </div>
                 <div class="tags">
                     <span class="tag">Quant Modeling</span> <span class="tag">CSMAR</span> <span class="tag">R</span>
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" data-tags="quant ma">
                 <div class="card-meta">
-                    <div class="card-date"><span class="en">April 2026 – May 2026</span><span class="zh">2026年04月 – 2026年05月</span></div>
-                    <div class="card-location"><span class="en">Nanjing</span><span class="zh">南京</span></div>
+                    <div class="card-date">April 2026 – May 2026</div>
+                    <div class="card-location">Nanjing</div>
                 </div>
-                <h3 class="card-title"><span class="en">Case Study on M&A and Restructuring in China’s Capital Market</span><span class="zh">中国资本市场并购重组案例研究</span></h3>
+                <h3 class="card-title">M&A and Restructuring in China’s Capital Market</h3>
                 <div class="card-body">
-                    <span class="en">Built a metric framework spanning governance and industry prosperity to evaluate cross-border strategic transformation M&As.</span>
-                    <span class="zh">从治理放权、行业景气度和标的质量三个维度构建计量框架，横向对比同类公司的整合差异以评估跨界战略转型并购。</span>
+                    • Contributed to a study covering 6 mainstream M&A models (including backdoor/cross-border), compared integration pathways across 3 listed companies, and co-authored a 50k-character report.<br>
+                    • Analyzed Zhongji Innolight as a non-backdoor strategic transformation case, examining governance delegation, AI-driven tailwinds, and target quality to identify success conditions.
                 </div>
                 <div class="tags" style="margin-top: 1.2rem;">
                     <span class="tag">Corporate Finance</span> <span class="tag">M&A</span> <span class="tag">Metrics</span>
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" data-tags="field-research">
                 <div class="card-meta">
-                    <div class="card-date"><span class="en">August 2025</span><span class="zh">2025年08月</span></div>
-                    <div class="card-location"><span class="en">Malaysia</span><span class="zh">马来西亚</span></div>
+                    <div class="card-date">August 2025</div>
+                    <div class="card-location">Malaysia</div>
                 </div>
-                <h3 class="card-title"><span class="en">Field Study on China’s Economy & Investment Development in “Belt and Road” Countries</span><span class="zh">中国经济及其在“一带一路”国家投资发展经验科考与科研训练项目</span></h3>
+                <h3 class="card-title">Field Research on Investment Experience in “Belt and Road” Countries</h3>
                 <div class="card-body">
-                    <span class="en">Conducted research across 10+ enterprises. Co-authored a 40k-word report on labor structural imbalances and technology transformation.</span>
-                    <span class="zh">赴马走访10余家企业及政府部门，合作撰写近4万字专题报告，分析出海中资企业的劳动力结构失衡与技术转移战略。</span>
+                    Visited 10+ Chinese enterprises, 3 government agencies, and 2 universities across Malaysia. Analyzed labor localization and technology transfer pathways through field research, identified a two-way adaptation logic, and co-authored a 40k-character thematic report.
                 </div>
                 <div class="card-award">
-                    🌍 <span class="en">Top 10 Team</span><span class="zh">南京大学“十佳团队”</span>
+                    🌍 Top 10 Team / Key Project
                 </div>
                 <div class="tags">
                     <span class="tag">Field Research</span> <span class="tag">Macro</span>
                 </div>
             </div>
         </div>
+
+        <div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <span class="section-label" style="font-size: 0.95rem; text-transform: none; letter-spacing: 0.03em;">AI Skills</span>
+            <h3 style="font-size: 1.1rem; color: var(--text-muted); font-weight: 500; margin-bottom: 1.5rem; margin-top: 0.25rem;">Custom AI Agents & Tools</h3>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3 class="card-title">🤖 Finals Preparation</h3>
+                <div class="card-body">
+                    AI-powered study assistant for financial engineering coursework, automating structured review notes, calculator programming, and mock exam generation.
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="card-title">📝 CV Bullet Generator</h3>
+                <div class="card-body">
+                    STAR-format resume bullet generator calibrated to MBB consulting standards, producing concise, data-backed achievement statements from raw input.
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="card-title">📋 Consulting Notes</h3>
+                <div class="card-body">
+                    Meeting note synthesis tool following BCG-style frameworks, converting raw interview transcripts into structured consulting memos with actionable findings.
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section id="skills" class="container reveal">
+    <section id="technical-skills" class="container reveal">
         <div class="section-header">
-            <span class="section-label"><span class="en">IV. Toolbox</span><span class="zh">IV. 工具箱</span></span>
-            <h2 class="section-title"><span class="en">Technical Skills</span><span class="zh">专业技能</span></h2>
+            <span class="section-label">V. Toolbox</span>
+            <h2 class="section-title">Technical Skills</h2>
         </div>
         
         <div class="skills-container">
             <div class="skill-category card">
-                <h4>💻 <span class="en">Data & Programming</span><span class="zh">数据与编程</span></h4>
+                <h4>💻 Data & Programming</h4>
                 <div class="tags">
-                    <span class="tag">🐍 Python</span> <span class="tag">🕸️ Web Scraping</span> <span class="tag">📈 R Language</span> <span class="tag">📊 Statistics & Econometrics</span> <span class="tag">🪄 Vibe Coding</span>
+                    <span class="tag">🐍 <i>Python</i></span> <span class="tag">🕸️ <i>Web Scraping</i></span> <span class="tag">📈 <i>R Language</i></span> <span class="tag">🤖 <i>AI Agent Construction</i></span> 
                 </div>
             </div>
             
             <div class="skill-category card">
-                <h4>💼 <span class="en">Business & Strategy</span><span class="zh">商业与战略软件</span></h4>
+                <h4>💼 Business & Strategy</h4>
                 <div class="tags">
-                    <span class="tag">💡 Think-cell</span> <span class="tag">📗 Advanced Excel</span> <span class="tag">📊 Financial Modelling</span> <span class="tag">🗄️ CSMAR / Wind Databases</span> 
+                    <span class="tag">💡 <i>Think-cell</i></span> <span class="tag">📗 <i>Advanced Excel</i></span> <span class="tag">🗄️ <i>CSMAR</i></span> <span class="tag">📊 <i>Macro/Micro Economics</i></span>
                 </div>
             </div>
 
             <div class="skill-category card">
-                <h4>🌐 <span class="en">Languages</span><span class="zh">语言能力</span></h4>
+                <h4>🌐 Languages</h4>
                 <div class="tags">
-                    <span class="tag"><span class="en">Mandarin Chinese (Native)</span><span class="zh">汉语普通话 (母语)</span></span> <span class="tag"><span class="en">English (IELTS: 7.0)</span><span class="zh">英语 (雅思 7.0)</span></span> 
+                    <span class="tag">Mandarin (Native)</span> <span class="tag">English (IELTS: 7.0 | CET-6: 564)</span> 
                 </div>
             </div>
             
             <div class="skill-category card">
-                <h4>🏆 <span class="en">Extracurricular</span><span class="zh">课外活动</span></h4>
+                <h4>🏆 Leadership & Extracurricular</h4>
                 <div style="font-size: 0.9rem; color: var(--text-muted);">
-                    <div style="margin-bottom: 0.5rem;">
-                        <span class="en">🫂 Peer Counselor, Class of Finance (2023 Intake), Nanjing University</span>
-                        <span class="zh">🫂 南京大学2023级金融学班级心理委员</span>
-                    </div>
-                    <div>
-                        <span class="en">🤝 Core Member, Student Union of Nanjing University. Coordinated partnerships with 30+ local merchants.</span>
-                        <span class="zh">🤝 南京大学学生会综合联络部核心成员。与30余家本地商户达成协同合作。</span> 
-                    </div>
-                
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="education" class="container reveal">
-        <div class="section-header">
-            <span class="section-label"><span class="en">V. Academics</span><span class="zh">V. 学历</span></span>
-            <h2 class="section-title"><span class="en">Education</span><span class="zh">教育背景</span></h2>
-        </div>
-        
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date"><span class="en">January 2026 – May 2026</span><span class="zh">2026年01月 – 2026年05月</span></div>
-                <h3 class="card-title"><span class="en">The University of Hong Kong (Exchange) </span><span class="zh">香港大学（交换）</span></h3>
-                <div class="card-subtitle"><span class="en">Exchange Student, Faculty of Business and Economics (Business School)</span><span class="zh">经管学院，交换生</span></div>
-                <div class="en card-body"><strong>Coursework:</strong> Venture Capital & Private Equity, NLP in Finance, FinTech.</div>
-                <div class="zh card-body"><strong>核心课程：</strong>风险投资与私募股权（VC&PE）、金融自然语言处理（NLP）、金融科技（FinTech）。</div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-date"><span class="en">September 2023 – June 2027*</span><span class="zh">2023年09月 – 2027年06月*</span></div>
-                <h3 class="card-title"><span class="en">Nanjing University (Undergraduate)</span><span class="zh">南京大学（本科）</span></h3>
-                <div class="card-subtitle"><span class="en">Bachelor of Economics, Major in Finance (Business School)</span><span class="zh">商学院，金融学本科</span></div>
-                <div class="en card-body">
-                    • <strong>Awards:</strong> People’s Scholarship (Top 40%); 2nd Prize of National Undergraduate Mathematical Competition.<br>
-                    • <strong>Coursework:</strong> Probability (98), Statistics (95), Econometrics (93), Monetary Finance (93).
-                </div>
-                <div class="zh card-body">
-                    • <strong>荣誉奖项：</strong> 人民奖学金（前 40%）；本科生数学竞赛非数学 B 类二等奖。<br>
-                    • <strong>核心课程：</strong> 概率论与数理统计（98）、统计学（95）、计量经济学（93）、货币金融学（93）。
+                    🤝 Core Member, Student Union of Nanjing University (Nov 2023 - Nov 2024). Coordinated partnerships with 30+ local merchants for student welfare programs.
                 </div>
             </div>
         </div>
@@ -439,10 +548,7 @@
 
     <footer id="contact">
         <div class="footer-content reveal">
-            <h2 class="footer-title">
-                <span class="en">Let’s Connect</span>
-                <span class="zh">期待与您交流</span>
-            </h2>
+            <h2 class="footer-title">Let’s Connect</h2>
             
             <div class="contact-grid">
                 <a href="https://www.linkedin.com/in/jinming-he-85582b392/" target="_blank" class="contact-item">
@@ -477,34 +583,101 @@
                     <span class="contact-info">hejinmingnju</span>
                 </div>
 
-                <!-- 新增的电话号码模块 -->
-                <a href="tel:+8618275316342" class="contact-item">
+                <div class="contact-item" style="cursor: pointer;">
                     <div class="contact-icon">
-                        <svg viewBox="0 0 512 512" fill="currentColor"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
                     </div>
                     <span class="contact-label">Phone</span>
-                    <span class="contact-info">+86 182 7531 6342</span>
-                </a>
-
+                    <span class="contact-info">+86 182-7531-6342</span>
+                </div>
             </div>
             
             <div class="footer-bottom">
-                &copy; 2026 He Jinming. <span class="en">All rights reserved.</span><span class="zh">保留所有权利。</span>
+                &copy; 2026 He Jinming. All rights reserved.
             </div>
         </div>
     </footer>
 
     <script>
-        // Language Toggle Functionality
-        function toggleLanguage() {
-            const body = document.body;
-            const currentLang = body.getAttribute('data-lang');
-            const newLang = currentLang === 'en' ? 'zh' : 'en';
-            body.setAttribute('data-lang', newLang);
-            document.documentElement.lang = newLang;
-        }
+        // Set Theme Icons
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('icon-sun');
+        const moonIcon = document.getElementById('icon-moon');
 
-        // Scroll Reveal Animation Observer
+        function updateIcons(theme) {
+            if (theme === 'dark') {
+                sunIcon.style.display = 'inline-block';
+                moonIcon.style.display = 'none';
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'inline-block';
+            }
+        }
+        
+        updateIcons(document.documentElement.getAttribute('data-theme') || 'light');
+
+        themeToggle.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcons(newTheme);
+        });
+
+        // Experience Accordion (only trigger on accordion-text click)
+        const accordionTexts = document.querySelectorAll('#experience .accordion-text');
+        accordionTexts.forEach(textEl => {
+            textEl.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const item = textEl.closest('.timeline-item');
+                const isExpanded = item.classList.contains('expanded');
+                // Collapse all
+                accordionTexts.forEach(t => {
+                    const parentItem = t.closest('.timeline-item');
+                    parentItem.classList.remove('expanded');
+                    t.textContent = t.getAttribute('data-collapsed');
+                });
+                // Expand the clicked one if it wasn't already open
+                if (!isExpanded) {
+                    item.classList.add('expanded');
+                    textEl.textContent = textEl.getAttribute('data-expanded');
+                }
+            });
+        });
+
+        // Project Filters
+        const filterPills = document.querySelectorAll('.filter-pill');
+        const projectCards = document.querySelectorAll('#projects .card');
+
+        filterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                filterPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                
+                const filter = pill.getAttribute('data-filter');
+                
+                projectCards.forEach(card => {
+                    const tags = card.getAttribute('data-tags');
+                    
+                    if (filter === 'all' || tags.includes(filter)) {
+                        card.style.display = 'flex';
+                        // Force a reflow
+                        void card.offsetWidth;
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                        setTimeout(() => {
+                            if (card.classList.contains('hidden')) {
+                                card.style.display = 'none';
+                            }
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Scroll Reveal Animation
         document.addEventListener('DOMContentLoaded', () => {
             const reveals = document.querySelectorAll('.reveal');
             const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
