@@ -210,13 +210,47 @@
             transition: max-height 0.4s ease;
         }
         .timeline-item.expanded .timeline-content { max-height: 800px; }
+
+        /* Experience section always visible */
+        #experience .timeline-content { max-height: none; overflow: visible; }
+
         .timeline-content .card-subtitle { margin-top: 1rem; }
 
         #projects .tag { font-style: italic; }
 
-        /* Skills Layout */
-        .skills-container { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        .skill-category h4 { margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        /* Skills Compact Layout */
+        .skills-compact {
+            display: flex; flex-direction: column;
+            border: 1px solid var(--border-color); border-radius: 12px;
+            overflow: hidden;
+        }
+        .skill-row {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .skill-row:last-child { border-bottom: none; }
+        .skill-row-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 1.2rem;
+            cursor: pointer; user-select: none;
+            font-weight: 600; font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        .skill-row-header:hover { background: rgba(37, 99, 235, 0.04); }
+        html[data-theme="dark"] .skill-row-header:hover { background: rgba(96, 165, 250, 0.06); }
+        .skill-row-toggle {
+            font-size: 0.7rem; color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+        .skill-row.collapsed .skill-row-toggle { transform: rotate(-90deg); }
+        .skill-row-tags {
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+            padding: 0 1.2rem 0.8rem;
+            max-height: 200px; overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .skill-row.collapsed .skill-row-tags {
+            max-height: 0; padding-top: 0; padding-bottom: 0;
+        }
 
         /* Footer & Contact */
         footer { padding: 6rem 0 4rem 0; background-color: #f8f8f9; border-top: 1px solid var(--border-color); }
@@ -262,8 +296,8 @@
                 He Jinming
             </a>
             <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#education">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#experience">Experience</a>
                 <a href="#technical-skills">Skills</a>
                 <a href="zh.html" style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted); opacity: 0.6;">中文</a>
                 <button id="theme-toggle" class="pill-btn" aria-label="Toggle Dark Mode">
@@ -275,38 +309,24 @@
     </nav>
 
     <section id="hero" class="hero container reveal">
-        <h1>Bridging Data Science <br>and Financial Strategy.</h1>
-        <p>I am an undergraduate student at Nanjing University majoring in Finance, just finishing my exchange study at HKU Business School. I focus on financial modeling, market analysis, and strategy consulting, leveraging tools like Python and AI agents to distill complex data into practical business insights.</p>
+        <h1>Bridging Data Science <br>and Financial Strategy</h1>
+        <p>I am an undergraduate student at Nanjing University majoring in Finance, just finishing my exchange study at HKU Business School. I focus on financial modeling, market analysis, and management consulting, leveraging tools like Python and AI agents to distill complex data into practical business insights.</p>
+        <div class="badge-container">
+            <span class="badge">💼 <i>Mgmt. Consulting</i></span>
+            <span class="badge">📊 <i>Financial Modelling</i></span>
+            <span class="badge">💻 <i>Data Science</i></span>
+            <span class="badge">🌱 <i>ESG Integration</i></span>
+            <span class="badge">🪄 <i>AI Agent</i></span>
+            <span class="badge">🛠️ <i>Skills Dev & Application</i></span>
+        </div>
         <div>
             <a href="#contact" class="btn-secondary">Get in touch &rarr;</a>
         </div>
     </section>
 
-    <section id="about" class="container reveal">
-        <div class="section-header">
-            <span class="section-label">I. Profile</span>
-            <h2 class="section-title">About Me</h2>
-            <p style="font-size: 0.9rem; color: var(--accent-color); margin-bottom: 1.5rem; font-weight: 500;">📍 Nanjing, China</p>
-        </div>
-        
-        <div class="badge-container">
-            <span class="badge">💼 <i>Consulting</i></span>
-            <span class="badge">📊 <i>Financial Modelling</i></span>
-            <span class="badge">💻 <i>Data Science</i></span>
-            <span class="badge">🌱 <i>ESG Integration</i></span>
-            <span class="badge">🪄 <i>AI Agents</i></span>
-            <span class="badge">🛠️ <i>Skills Dev & Application</i></span>
-        </div>
-
-        <div style="width: 100%;">
-            <p style="margin-bottom: 1.2rem;">I am highly motivated by the intersection of traditional finance and modern technological applications. Currently pursuing my studies in Finance at Nanjing University, I actively utilize tools like Python, web scraping, and AI agent frameworks to gather alternative data, bringing an empirical edge to strategic consulting and academic research.</p>
-            <p>Whenever exploring market conditions and economic variations, I adopt structured analytical thinking to yield practical and valuable results.</p>
-        </div>
-    </section>
-
     <section id="education" class="container reveal">
         <div class="section-header">
-            <span class="section-label">II. Education</span>
+            <span class="section-label">I. Education</span>
             <h2 class="section-title">Education</h2>
         </div>
         
@@ -318,7 +338,7 @@
                 </div>
                 <div class="timeline-content" style="max-height: 800px;">
                     <div class="card-subtitle" style="margin-top: 0;">BEcon&Fin: Faculty of Business and Economics</div>
-                    <div class="card-body"><strong>Coursework:</strong> Venture Capital & Private Equity, NLP in Finance & FinTech.</div>
+                    <div class="card-body"><strong>Coursework:</strong> Venture Capital & Private Equity, NLP in Finance & FinTech</div>
                 </div>
             </div>
 
@@ -328,10 +348,10 @@
                     <h3 class="card-title">Nanjing University (Undergraduate)</h3>
                 </div>
                 <div class="timeline-content" style="max-height: 800px;">
-                    <div class="card-subtitle" style="margin-top: 0;">Business School, Major in Finance (GPA: 4.41/5.0 | Rank: 14/34)</div>
+                    <div class="card-subtitle" style="margin-top: 0;">Business School, Major in Finance (GPA: 4.41/5.0, Rank: 14/34)</div>
                     <div class="card-body">
-                        • <strong>Awards:</strong> People's Scholarship (Top 40%; 2024, 2025); 2nd Prize of National Undergraduate Mathematical Competition (2025).<br>
-                        • <strong>Coursework:</strong> Probability Theory & Mathematical Statistics (98), Statistics (95), Monetary Finance & Banking (93), Econometrics (93), Macro-Economics (91), Financial Economics (91), Linear Algebra (90), Calculus I & II.
+                        • <strong>Awards:</strong> People's Scholarship (Top 40%; 2024, 2025); 2nd Prize of National Undergraduate Mathematical Competition (2025)<br>
+                        • <strong>Coursework:</strong> Probability Theory & Mathematical Statistics (98), Statistics (95), Monetary Finance & Banking (93), Econometrics (93), Macro-Economics (91), Financial Economics (91), Linear Algebra (90), Calculus I & II
                     </div>
                 </div>
             </div>
@@ -340,7 +360,7 @@
 
     <section id="experience" class="container reveal">
         <div class="section-header">
-            <span class="section-label">III. Career</span>
+            <span class="section-label">II. Career</span>
             <h2 class="section-title">Professional Experience</h2>
         </div>
         
@@ -348,15 +368,12 @@
             <!-- BCG Timeline Accordion -->
             <div class="timeline-item">
                 <div class="timeline-header">
-                    <div class="timeline-date">
-                        <span>December 2025 – June 2026*</span>
-                        <span class="accordion-text" data-collapsed="Expand ▾" data-expanded="Collapse ▴">Expand ▾</span>
-                    </div>
+                    <div class="timeline-date">December 2025 – June 2026*</div>
                     <h3 class="card-title">The Boston Consulting Group (BCG)</h3>
                 </div>
                 <div class="card-subtitle">Part-Time Assistant Program · Shanghai</div>
                 <div class="timeline-pills">
-                    <span class="tag">🏢 <i>Mgmt Consulting</i></span>
+                    <span class="tag">🏢 <i>Mgmt. Consulting</i></span>
                     <span class="tag">🐍 <i>Python Scraping</i></span>
                     <span class="tag">⚖️ <i>Regulatory Analysis</i></span>
                     <span class="tag">🧭 <i>Customer Journey</i></span>
@@ -366,9 +383,9 @@
                 </div>
                 <div class="timeline-content">
                     <div class="card-body">
-                        • <strong>Regulatory Data Analysis:</strong> Identified a post-2024 regulatory enforcement inflection point in China's pet food sector by scraping and analyzing sector-wide administrative penalty data with Python, equipping the team with a quantified risk baseline of the client's regulatory exposure.<br><br>
-                        • <strong>Customer Journey Framework:</strong> Structured a 60-journey customer experience framework for a bank’s customer journey optimization by synthesizing three C-level interviews and desk research into actionable findings, supporting the team’s client deliverable through four rounds of partner feedback and iteration.<br><br>
-                        • <strong>Store Audit:</strong> Audited in-store execution at a menswear brand against management's playbook on sales scripts and merchandising, and profiled four outdoor apparel competitors on product and material, delivering frontline evidence and market context that grounded the team's brand strategy.
+                        • <strong>Regulatory Data Analysis:</strong> Identified a post-2024 regulatory enforcement inflection point in China's pet food sector by scraping and analyzing sector-wide administrative penalty data with Python, equipping the team with a quantified risk baseline of the client's regulatory exposure<br><br>
+                        • <strong>Customer Journey Framework:</strong> Structured a 60-journey customer experience framework for a bank’s customer journey optimization by synthesizing three C-level interviews and desk research into actionable findings, supporting the team’s client deliverable through four rounds of partner feedback and iteration<br><br>
+                        • <strong>Field Store Visit:</strong> Audited in-store execution at a menswear brand against management's playbook on sales scripts and merchandising, and profiled four outdoor apparel competitors on product and material, delivering frontline evidence and market context that grounded the team's brand strategy
                     </div>
                 </div>
             </div>
@@ -376,10 +393,7 @@
             <!-- Tianfeng Timeline Accordion -->
             <div class="timeline-item">
                 <div class="timeline-header">
-                    <div class="timeline-date">
-                        <span>September 2025 – November 2025</span>
-                        <span class="accordion-text" data-collapsed="Expand ▾" data-expanded="Collapse ▴">Expand ▾</span>
-                    </div>
+                    <div class="timeline-date">September 2025 – November 2025</div>
                     <h3 class="card-title">Tianfeng Securities Co. Ltd.</h3>
                 </div>
                 <div class="card-subtitle">Intern in Fixed Income Research Group · Shanghai</div>
@@ -392,8 +406,8 @@
                 </div>
                 <div class="timeline-content">
                     <div class="card-body">
-                        • <strong>Financing Cost Benchmarking:</strong> Distilled transcripts from 3 Hubei LGFV platforms (>RMB 250bn) into ~30k words of memos, benchmarking financing costs across bank, bond, non-standard, and trust channels to assess refinancing capacity, alongside credit research on 10 water utilities.<br><br>
-                        • <strong>Market Tracking & Reporting:</strong> Managed a daily database of 53 bond ETFs across government, credit, and convertible bonds, tracking AUM, turnover, and volume, and produced 15+ market reports and 20+ credit briefings, developing real-time market sensitivity and risk monitoring discipline.
+                        • <strong>Financing Cost Benchmarking:</strong> Distilled transcripts from 3 Hubei LGFV platforms (>RMB 250bn) into ~30k words of memos, benchmarking financing costs across bank, bond, non-standard, and trust channels to assess refinancing capacity, alongside credit research on 10 water utilities<br><br>
+                        • <strong>Market Tracking & Reporting:</strong> Managed a daily database of 53 bond ETFs across government, credit, and convertible bonds, tracking AUM, turnover, and volume, and produced 15+ market reports and 20+ credit briefings, developing real-time market sensitivity and risk monitoring discipline
                     </div>
                 </div>
             </div>
@@ -402,11 +416,12 @@
 
     <section id="projects" class="container reveal">
         <div class="section-header">
-            <span class="section-label">IV. Selected Work</span>
+            <span class="section-label">III. Selected Work</span>
             <h2 class="section-title">Projects & Research</h2>
         </div>
 
         <div class="filter-container">
+            <span style="font-size: 0.78rem; color: var(--text-muted); margin-right: 0.4rem; display: flex; align-items: center;">Categorize:</span>
             <button class="filter-pill active" data-filter="all">All</button>
             <button class="filter-pill" data-filter="strategy">Strategy</button>
             <button class="filter-pill" data-filter="esg">ESG</button>
@@ -422,8 +437,8 @@
                 </div>
                 <h3 class="card-title">The 2025 “Bain Cup” Case Competition</h3>
                 <div class="card-body">
-                    • Analyzed AI-enabled ESG consulting in the renewable energy sector using CSMAR, Chindices, and IIGF data, and developed a framework of “Market Competition Analysis – Dual-line strategy – Strategy implementation” to formulate growth strategies.<br>
-                    • Concluded that the client should develop online SaaS platforms and onsite AI server base stations, visualizing conclusions into 16 charts using Think-cell & Python for a 21-page deck.
+                    • Analyzed AI-enabled ESG consulting in the renewable energy sector using CSMAR, Chindices, and IIGF data, and developed a framework of “Market Competition Analysis – Dual-line strategy – Strategy implementation” to formulate growth strategies<br>
+                    • Concluded that the client should develop online SaaS platforms and onsite AI server base stations, visualizing conclusions into 16 charts using Think-cell & Python for a 21-page deck
                 </div>
                 <div class="card-award">
                     🏆 Outstanding Case Report, Top 10%
@@ -440,8 +455,8 @@
                 </div>
                 <h3 class="card-title">Smart Logistics & Environmental Performance</h3>
                 <div class="card-body">
-                    • Developed a “Company-City” ESG evaluation model from CSMAR manufacturing panel data (2010-2023) and a field study in Nanjing.<br>
-                    • Identified ESG improvements driven by productivity gains and cost contraction, delivering 10+ analytical charts and a thematic report with detailed heterogeneity analysis.
+                    • Developed a “Company-City” ESG evaluation model from CSMAR manufacturing panel data (2010-2023) and a field study in Nanjing<br>
+                    • Identified ESG improvements driven by productivity gains and cost contraction, delivering 10+ analytical charts and a thematic report with detailed heterogeneity analysis
                 </div>
                 <div class="card-award">
                     ⭐ Principal Investigator / "Yinxing Cup" Award
@@ -458,8 +473,8 @@
                 </div>
                 <h3 class="card-title">M&A and Restructuring in China’s Capital Market</h3>
                 <div class="card-body">
-                    • Contributed to a study covering 6 mainstream M&A models (including backdoor/cross-border), compared integration pathways across 3 listed companies, and co-authored a 50k-character report.<br>
-                    • Analyzed Zhongji Innolight as a non-backdoor strategic transformation case, examining governance delegation, AI-driven tailwinds, and target quality to identify success conditions.
+                    • Contributed to a study covering 6 mainstream M&A models (including backdoor/cross-border), compared integration pathways across 3 listed companies, and co-authored a 50k-character report<br>
+                    • Analyzed Zhongji Innolight as a non-backdoor strategic transformation case, examining governance delegation, AI-driven tailwinds, and target quality to identify success conditions
                 </div>
                 <div class="tags" style="margin-top: 1.2rem;">
                     <span class="tag">Corporate Finance</span> <span class="tag">M&A</span> <span class="tag">Metrics</span>
@@ -473,7 +488,7 @@
                 </div>
                 <h3 class="card-title">Field Research on Investment Experience in “Belt and Road” Countries</h3>
                 <div class="card-body">
-                    Visited 10+ Chinese enterprises, 3 government agencies, and 2 universities across Malaysia. Analyzed labor localization and technology transfer pathways through field research, identified a two-way adaptation logic, and co-authored a 40k-character thematic report.
+                    Visited 10+ Chinese enterprises, 3 government agencies, and 2 universities across Malaysia Analyzed labor localization and technology transfer pathways through field research, identified a two-way adaptation logic, and co-authored a 40k-character thematic report
                 </div>
                 <div class="card-award">
                     🌍 Top 10 Team / Key Project
@@ -493,19 +508,19 @@
             <div class="card">
                 <h3 class="card-title">🤖 Finals Preparation</h3>
                 <div class="card-body">
-                    AI-powered study assistant for financial engineering coursework, automating structured review notes, calculator programming, and mock exam generation.
+                    AI-powered study assistant for financial engineering coursework, automating structured review notes, calculator programming, and mock exam generation
                 </div>
             </div>
             <div class="card">
                 <h3 class="card-title">📝 CV Bullet Generator</h3>
                 <div class="card-body">
-                    STAR-format resume bullet generator calibrated to MBB consulting standards, producing concise, data-backed achievement statements from raw input.
+                    STAR-format resume bullet generator calibrated to MBB consulting standards, producing concise, data-backed achievement statements from raw input
                 </div>
             </div>
             <div class="card">
                 <h3 class="card-title">📋 Consulting Notes</h3>
                 <div class="card-body">
-                    Meeting note synthesis tool following BCG-style frameworks, converting raw interview transcripts into structured consulting memos with actionable findings.
+                    Meeting note synthesis tool following BCG-style frameworks, converting raw interview transcripts into structured consulting memos with actionable findings
                 </div>
             </div>
         </div>
@@ -513,36 +528,38 @@
 
     <section id="technical-skills" class="container reveal">
         <div class="section-header">
-            <span class="section-label">V. Toolbox</span>
+            <span class="section-label">IV. Toolbox</span>
             <h2 class="section-title">Technical Skills</h2>
         </div>
         
-        <div class="skills-container">
-            <div class="skill-category card">
-                <h4>💻 Data & Programming</h4>
-                <div class="tags">
-                    <span class="tag">🐍 <i>Python</i></span> <span class="tag">🕸️ <i>Web Scraping</i></span> <span class="tag">📈 <i>R Language</i></span> <span class="tag">🤖 <i>AI Agent Construction</i></span> 
+        <div class="skills-compact">
+            <div class="skill-row">
+                <div class="skill-row-header">
+                    <span>💻 Data & Programming</span>
+                    <span class="skill-row-toggle">▾</span>
+                </div>
+                <div class="skill-row-tags">
+                    <span class="tag">🐍 <i>Python</i></span> <span class="tag">🕸️ <i>Web Scraping</i></span> <span class="tag">📈 <i>R Language</i></span> <span class="tag">🤖 <i>AI Agent Construction</i></span>
                 </div>
             </div>
             
-            <div class="skill-category card">
-                <h4>💼 Business & Strategy</h4>
-                <div class="tags">
+            <div class="skill-row">
+                <div class="skill-row-header">
+                    <span>💼 Business & Strategy</span>
+                    <span class="skill-row-toggle">▾</span>
+                </div>
+                <div class="skill-row-tags">
                     <span class="tag">💡 <i>Think-cell</i></span> <span class="tag">📗 <i>Advanced Excel</i></span> <span class="tag">🗄️ <i>CSMAR</i></span> <span class="tag">📊 <i>Macro/Micro Economics</i></span>
                 </div>
             </div>
 
-            <div class="skill-category card">
-                <h4>🌐 Languages</h4>
-                <div class="tags">
-                    <span class="tag">Mandarin (Native)</span> <span class="tag">English (IELTS: 7.0 | CET-6: 564)</span> 
+            <div class="skill-row">
+                <div class="skill-row-header">
+                    <span>🌐 Languages</span>
+                    <span class="skill-row-toggle">▾</span>
                 </div>
-            </div>
-            
-            <div class="skill-category card">
-                <h4>🏆 Leadership & Extracurricular</h4>
-                <div style="font-size: 0.9rem; color: var(--text-muted);">
-                    🤝 Core Member, Student Union of Nanjing University (Nov 2023 - Nov 2024). Coordinated partnerships with 30+ local merchants for student welfare programs.
+                <div class="skill-row-tags">
+                    <span class="tag">Mandarin (Native)</span> <span class="tag">English (IELTS: 7.0 | CET-6: 564)</span>
                 </div>
             </div>
         </div>
@@ -595,7 +612,7 @@
             </div>
             
             <div class="footer-bottom">
-                &copy; 2026 He Jinming. All rights reserved.
+                &copy; 2026 He Jinming All rights reserved
             </div>
         </div>
     </footer>
@@ -676,6 +693,13 @@
                         }, 300);
                     }
                 });
+            });
+        });
+
+        // Skills row collapse toggle
+        document.querySelectorAll('.skill-row-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.parentElement.classList.toggle('collapsed');
             });
         });
 
