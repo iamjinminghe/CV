@@ -47,6 +47,9 @@
             transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
 
+        /* Offset for fixed nav when jumping to sections */
+        html { scroll-padding-top: 80px; scroll-behavior: smooth; }
+
         /* Typography */
         h1, h2, h3, h4 { font-weight: 600; line-height: 1.2; }
         a { color: var(--accent-color); text-decoration: none; transition: color var(--transition-speed); }
@@ -104,7 +107,7 @@
 
         /* Hero Section */
         .hero { padding-top: 13rem !important; padding-bottom: 8rem; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
-        .hero h1 { font-size: 3.5rem; letter-spacing: -0.02em; margin-bottom: 2rem; font-family: 'Georgia', 'Times New Roman', serif; font-style: italic; font-weight: 400; }
+        .hero h1 { font-size: 2.8rem; letter-spacing: -0.02em; margin-bottom: 2rem; font-family: 'Georgia', 'Times New Roman', serif; font-style: italic; font-weight: 400; }
         .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin-bottom: 2.5rem; }
         
         .btn-primary { display: inline-block; background: var(--text-main); color: #fff; padding: 0.8rem 1.5rem; border-radius: 6px; font-weight: 500; margin-right: 1rem; transition: background 0.3s, color 0.3s; }
@@ -260,7 +263,7 @@
             </a>
             <div class="nav-links">
                 <a href="#about">About</a>
-                <a href="#experience">Experience</a>
+                <a href="#education">Experience</a>
                 <a href="#technical-skills">Skills</a>
                 <a href="zh.html" style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted); opacity: 0.6;">中文</a>
                 <button id="theme-toggle" class="pill-btn" aria-label="Toggle Dark Mode">
