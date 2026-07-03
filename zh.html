@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>何金明 | 个人主页</title>
-    <meta name="description" content="何金明的个人主页。">
+    <meta name="description" content="何金明的个人主页">
     
     <style>
         /* Import classical woodblock-print serif font */
@@ -213,11 +213,45 @@
             transition: max-height 0.4s ease;
         }
         .timeline-item.expanded .timeline-content { max-height: 800px; }
+
+        /* Experience section always visible */
+        #experience .timeline-content { max-height: none; overflow: visible; }
+
         .timeline-content .card-subtitle { margin-top: 1rem; }
 
-        /* Skills Layout */
-        .skills-container { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        .skill-category h4 { margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        /* Skills Compact Layout */
+        .skills-compact {
+            display: flex; flex-direction: column;
+            border: 1px solid var(--border-color); border-radius: 12px;
+            overflow: hidden;
+        }
+        .skill-row {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .skill-row:last-child { border-bottom: none; }
+        .skill-row-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 1.2rem;
+            cursor: pointer; user-select: none;
+            font-weight: 600; font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        .skill-row-header:hover { background: rgba(37, 99, 235, 0.04); }
+        html[data-theme="dark"] .skill-row-header:hover { background: rgba(96, 165, 250, 0.06); }
+        .skill-row-toggle {
+            font-size: 0.7rem; color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+        .skill-row.collapsed .skill-row-toggle { transform: rotate(-90deg); }
+        .skill-row-tags {
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+            padding: 0 1.2rem 0.8rem;
+            max-height: 200px; overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .skill-row.collapsed .skill-row-tags {
+            max-height: 0; padding-top: 0; padding-bottom: 0;
+        }
 
         /* Footer & Contact */
         footer { padding: 6rem 0 4rem 0; background-color: #f8f8f9; border-top: 1px solid var(--border-color); }
@@ -263,8 +297,8 @@
                 何金明
             </a>
             <div class="nav-links">
-                <a href="#about">关于</a>
-                <a href="#education">经历</a>
+                <a href="#education">教育</a>
+                <a href="#experience">经历</a>
                 <a href="#skills">技能</a>
                 <a href="index.html" style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted); opacity: 0.6;">English</a>
                 <button id="theme-toggle" class="pill-btn" aria-label="Toggle Dark Mode">
@@ -277,37 +311,23 @@
 
     <section id="hero" class="hero container reveal">
         <h1>连接数据科学<br>与金融战略</h1>
-        <p>我是南京大学金融学在读本科生，刚刚结束在香港大学经管学院的交换学习。主攻金融建模、市场分析与战略咨询，擅长运用Python与AI智能体等工具将繁杂数据提炼为实用商业见解。</p>
-        <div>
-            <a href="#contact" class="btn-secondary">与我交流 &rarr;</a>
-        </div>
-    </section>
-
-    <section id="about" class="container reveal">
-        <div class="section-header">
-            <span class="section-label">I. 简介</span>
-            <h2 class="section-title">关于我</h2>
-            <p style="font-size: 0.9rem; color: var(--accent-color); margin-bottom: 1.5rem; font-weight: 500;">📍 南京</p>
-        </div>
-        
+        <p>我是南京大学金融学在读本科生，刚刚结束在香港大学经管学院的交换学习主攻金融建模、市场分析与管理咨询，擅长运用Python与AI智能体等工具将繁杂数据提炼为实用商业见解</p>
         <div class="badge-container">
-            <span class="badge">💼 战略咨询</span>
+            <span class="badge">💼 管理咨询</span>
             <span class="badge">📊 金融建模</span>
             <span class="badge">💻 数据科学</span>
             <span class="badge">🌱 ESG分析</span>
             <span class="badge">🪄 AI Agents</span>
             <span class="badge">🛠️ Skills 开发与应用</span>
         </div>
-
-        <div style="width: 100%;">
-            <p style="margin-bottom: 1.2rem;">我对传统金融与现代技术应用的交叉领域充满热情。目前在南京大学攻读金融学，我积极运用 Python、网络爬虫以及AI智能体搭建等工具收集另类数据，为战略咨询和学术研究提供支持。</p>
-            <p>依托严谨分析逻辑研判市场与经济变化，专注产出务实有效的研究结论。</p>
+        <div>
+            <a href="#contact" class="btn-secondary">与我交流 &rarr;</a>
         </div>
     </section>
 
     <section id="education" class="container reveal">
         <div class="section-header">
-            <span class="section-label">II. 学历</span>
+            <span class="section-label">I. 学历</span>
             <h2 class="section-title">教育背景</h2>
         </div>
         
@@ -319,7 +339,7 @@
                 </div>
                 <div class="timeline-content" style="max-height: 800px;">
                     <div class="card-subtitle" style="margin-top: 0;">经管学院，经济与金融学学士</div>
-                    <div class="card-body"><strong>核心课程：</strong>VC&PE，金融与金融科技中的NLP。</div>
+                    <div class="card-body"><strong>核心课程：</strong>VC&PE，金融与金融科技中的NLP</div>
                 </div>
             </div>
 
@@ -329,10 +349,10 @@
                     <h3 class="card-title">南京大学（本科）</h3>
                 </div>
                 <div class="timeline-content" style="max-height: 800px;">
-                    <div class="card-subtitle" style="margin-top: 0;">商学院金融学（GPA: 4.41/5.0 | 排名: 14/34）</div>
+                    <div class="card-subtitle" style="margin-top: 0;">商学院金融学（GPA: 4.41/5.0， 排名: 14/34）</div>
                     <div class="card-body">
-                        • <strong>荣誉奖项：</strong> 人民奖学金（前40%；2024，2025）；本科生数学竞赛非数学B类二等奖（2025）。<br>
-                        • <strong>核心课程：</strong> 概率论与数理统计（98），统计学（95），货币金融学（93），计量经济学（93），宏观经济学（91），金融经济学（91），线性代数（90），微积分I & II。
+                        • <strong>荣誉奖项：</strong> 人民奖学金（前40%；2024，2025）；本科生数学竞赛非数学B类二等奖（2025）<br>
+                        • <strong>核心课程：</strong> 概率论与数理统计（98），统计学（95），货币金融学（93），计量经济学（93），宏观经济学（91），金融经济学（91），线性代数（90），微积分I & II
                     </div>
                 </div>
             </div>
@@ -341,7 +361,7 @@
 
     <section id="experience" class="container reveal">
         <div class="section-header">
-            <span class="section-label">III. 职业轨迹</span>
+            <span class="section-label">II. 职业轨迹</span>
             <h2 class="section-title">实习经历</h2>
         </div>
         
@@ -349,10 +369,7 @@
             <!-- BCG Timeline Accordion -->
             <div class="timeline-item">
                 <div class="timeline-header">
-                    <div class="timeline-date">
-                        <span>2025年12月 – 2026年06月*</span>
-                        <span class="accordion-text" data-collapsed="展开 ▾" data-expanded="折叠 ▴">展开 ▾</span>
-                    </div>
+                    <div class="timeline-date">2025年12月 – 2026年06月*</div>
                     <h3 class="card-title">波士顿咨询公司（BCG）</h3>
                 </div>
                 <div class="card-subtitle">PTA项目 · 上海</div>
@@ -367,9 +384,9 @@
                 </div>
                 <div class="timeline-content">
                     <div class="card-body">
-                        • <strong>合规监管分析：</strong> 某宠物食品企业的增长战略中，基于对行业合规政策趋势提出监管执法力度显著升级的假设，利用Python爬虫抓取宠物食品细分赛道全量公司的行政处罚记录，通过数据分析证实2024年后处罚频率明显增长，为客户提供关键的合规准入与风险避让依据。<br><br>
-                        • <strong>客户体验框架构建：</strong> 为某银行客户旅程优化项目搭建覆盖60条旅程的客户体验框架，运用AI Agent编写纪要生成Skill定义三分类分析框架与转写规范，并在高管访谈中根据输出质量持续优化该Skill，最终形成标准化工具支撑团队交付。<br><br>
-                        • <strong>品牌战略稽核（店访）：</strong> 在某男装品牌战略定位项目中，实地稽核门店一线执行，逐项对照管理手册核验销售话术规范度与陈列标准落地合规性，同步完成四家户外服饰竞品的产品定位、材质构成与定价策略对标分析，为团队品牌战略提供了事实依据和市场参照。
+                        • <strong>合规监管分析：</strong> 某宠物食品企业的增长战略中，基于对行业合规政策趋势提出监管执法力度显著升级的假设，利用Python爬虫抓取宠物食品细分赛道全量公司的行政处罚记录，通过数据分析证实2024年后处罚频率明显增长，为客户提供关键的合规准入与风险避让依据<br><br>
+                        • <strong>客户体验框架构建：</strong> 为某银行客户旅程优化项目搭建覆盖60条旅程的客户体验框架，运用AI Agent编写纪要生成Skill定义三分类分析框架与转写规范，并在高管访谈中根据输出质量持续优化该Skill，最终形成标准化工具支撑团队交付<br><br>
+                        • <strong>品牌战略实地店访：</strong> 在某男装品牌战略定位项目中，实地稽核门店一线执行，逐项对照管理手册核验销售话术规范度与陈列标准落地合规性，同步完成四家户外服饰竞品的产品定位、材质构成与定价策略对标分析，为团队品牌战略提供了事实依据和市场参照
                     </div>
                 </div>
             </div>
@@ -377,10 +394,7 @@
             <!-- Tianfeng Timeline Accordion -->
             <div class="timeline-item">
                 <div class="timeline-header">
-                    <div class="timeline-date">
-                        <span>2025年09月 – 2025年11月</span>
-                        <span class="accordion-text" data-collapsed="展开 ▾" data-expanded="折叠 ▴">展开 ▾</span>
-                    </div>
+                    <div class="timeline-date">2025年09月 – 2025年11月</div>
                     <h3 class="card-title">天风证券</h3>
                 </div>
                 <div class="card-subtitle">固收组实习 · 上海</div>
@@ -393,8 +407,8 @@
                 </div>
                 <div class="timeline-content">
                     <div class="card-body">
-                        • <strong>融资结构与成本剖析：</strong> 动态跟踪ETF及信用市场行情，通过专家访谈及政策梳理剖析省级城投平台融资结构，对比并梳理信托（~6%）、非标（~5%）及银行贷款（~3%）的成本差异，产出推文揭示财政收紧背景下融资向低成本信贷倾斜的趋势。<br><br>
-                        • <strong>市场追踪与分析：</strong> 负责追踪管理包含政金债、信用债及可转债在内的53只债券ETF的每日数据库，撰写多篇市场分析报告与信用简报，培养对市场的敏感度与风险监测能力。
+                        • <strong>融资结构与成本剖析：</strong> 动态跟踪ETF及信用市场行情，通过专家访谈及政策梳理剖析省级城投平台融资结构，对比并梳理信托（~6%）、非标（~5%）及银行贷款（~3%）的成本差异，产出推文揭示财政收紧背景下融资向低成本信贷倾斜的趋势<br><br>
+                        • <strong>市场追踪与分析：</strong> 负责追踪管理包含政金债、信用债及可转债在内的53只债券ETF的每日数据库，撰写多篇市场分析报告与信用简报，培养对市场的敏感度与风险监测能力
                     </div>
                 </div>
             </div>
@@ -403,11 +417,12 @@
 
     <section id="projects" class="container reveal">
         <div class="section-header">
-            <span class="section-label">IV. 精选项目</span>
+            <span class="section-label">III. 精选项目</span>
             <h2 class="section-title">科研与项目实践</h2>
         </div>
 
         <div class="filter-container">
+            <span style="font-size: 0.78rem; color: var(--text-muted); margin-right: 0.4rem; display: flex; align-items: center;">分类：</span>
             <button class="filter-pill active" data-filter="all">全部</button>
             <button class="filter-pill" data-filter="strategy">战略</button>
             <button class="filter-pill" data-filter="esg">ESG</button>
@@ -423,8 +438,8 @@
                 </div>
                 <h3 class="card-title">2025年“贝恩杯”咨询启航案例大赛</h3>
                 <div class="card-body">
-                    • 负责AI赋能新能源行业ESG咨询市场调研，运用国泰安、华证指数等平台进行数据收集，完成“市场竞争分析—‘双线’战略—策略实施”的框架搭建。<br>
-                    • 得出客户应开发线上SaaS平台与设立线下AI基站的结论，使用Thinkcell、Python将分析可视化为16张图表，合作完成21页PPT。
+                    • 负责AI赋能新能源行业ESG咨询市场调研，运用国泰安、华证指数等平台进行数据收集，完成“市场竞争分析—‘双线’战略—策略实施”的框架搭建<br>
+                    • 得出客户应开发线上SaaS平台与设立线下AI基站的结论，使用Thinkcell、Python将分析可视化为16张图表，合作完成21页PPT
                 </div>
                 <div class="card-award">
                     🏆 优秀案例（全球前10%）
@@ -441,8 +456,8 @@
                 </div>
                 <h3 class="card-title">企业和城市视角下的智慧物流与环境绩效</h3>
                 <div class="card-body">
-                    • 依托CSMAR数据库2010–2023年制造业面板数据，结合南京江宁空港实地调研，构建“企业—城市”双视角ESG评估模型。<br>
-                    • 识别出ESG改善由生产率提升与成本收缩驱动，完成十余份图表与专题报告，并按企业规模与地区进行异质性拆解。
+                    • 依托CSMAR数据库2010–2023年制造业面板数据，结合南京江宁空港实地调研，构建“企业—城市”双视角ESG评估模型<br>
+                    • 识别出ESG改善由生产率提升与成本收缩驱动，完成十余份图表与专题报告，并按企业规模与地区进行异质性拆解
                 </div>
                 <div class="card-award">
                     ⭐ 省级立项主持人 / 南大“银星杯”
@@ -459,8 +474,8 @@
                 </div>
                 <h3 class="card-title">中国资本市场并购重组案例研究</h3>
                 <div class="card-body">
-                    • 系统梳理借壳上市与跨境并购等六类主流并购重组模式，选取三家通过并购实现第二曲线增长的上市公司进行横向对比，合作完成近五万字专题研究报告。<br>
-                    • 以中际旭创为典型案例，深入剖析其非借壳式战略转型路径，从治理放权、AI算力需求驱动与标的质量三个维度提炼四项可检验假设。
+                    • 系统梳理借壳上市与跨境并购等六类主流并购重组模式，选取三家通过并购实现第二曲线增长的上市公司进行横向对比，合作完成近五万字专题研究报告<br>
+                    • 以中际旭创为典型案例，深入剖析其非借壳式战略转型路径，从治理放权、AI算力需求驱动与标的质量三个维度提炼四项可检验假设
                 </div>
                 <div class="tags" style="margin-top: 1.2rem;">
                     <span class="tag">Corporate Finance</span> <span class="tag">M&A</span> <span class="tag">Metrics</span>
@@ -474,7 +489,7 @@
                 </div>
                 <h3 class="card-title">中国经济及其在“一带一路”国家投资发展经验科考</h3>
                 <div class="card-body">
-                    走访10余家在马中资企业、3个政府部门、2所高校。结合近8万字“云”调研成果，开展中企出海劳动力使用与技术转移研究，分析劳动力结构失衡，得出“合规、合理、合作”结论，合作撰写近4万字分析报告。
+                    走访10余家在马中资企业、3个政府部门、2所高校结合近8万字“云”调研成果，开展中企出海劳动力使用与技术转移研究，分析劳动力结构失衡，得出“合规、合理、合作”结论，合作撰写近4万字分析报告
                 </div>
                 <div class="card-award">
                     🌍 校级重点立项 / 十佳团队
@@ -494,19 +509,19 @@
             <div class="card">
                 <h3 class="card-title">🤖 期末备考助手</h3>
                 <div class="card-body">
-                    金融工程课程AI学习助手，自动化生成结构化复习笔记、计算器程序编写及模拟考题生成。
+                    金融工程课程AI学习助手，自动化生成结构化复习笔记、计算器程序编写及模拟考题生成
                 </div>
             </div>
             <div class="card">
                 <h3 class="card-title">📝 CV简历生成器</h3>
                 <div class="card-body">
-                    对标MBB咨询标准的STAR简历bullet自动生成工具，将原始经历转化为简洁、数据驱动的工作成果陈述。
+                    对标MBB咨询标准的STAR简历bullet自动生成工具，将原始经历转化为简洁、数据驱动的工作成果陈述
                 </div>
             </div>
             <div class="card">
                 <h3 class="card-title">📋 咨询纪要整理</h3>
                 <div class="card-body">
-                    BCG风格的会议纪要AI合成工具，将原始访谈录音转写转化为结构化咨询备忘录，提炼可执行洞见。
+                    BCG风格的会议纪要AI合成工具，将原始访谈录音转写转化为结构化咨询备忘录，提炼可执行洞见
                 </div>
             </div>
         </div>
@@ -514,36 +529,38 @@
 
     <section id="skills" class="container reveal">
         <div class="section-header">
-            <span class="section-label">V. 工具箱</span>
+            <span class="section-label">IV. 工具箱</span>
             <h2 class="section-title">专业技能</h2>
         </div>
         
-        <div class="skills-container">
-            <div class="skill-category card">
-                <h4>💻 数据与编程</h4>
-                <div class="tags">
-                    <span class="tag">🐍 Python</span> <span class="tag">🕸️ 基础网络爬虫</span> <span class="tag">📈 R Language</span> <span class="tag">🤖 AI智能体搭建&Skill编写</span> 
+        <div class="skills-compact">
+            <div class="skill-row">
+                <div class="skill-row-header">
+                    <span>💻 数据与编程</span>
+                    <span class="skill-row-toggle">▾</span>
+                </div>
+                <div class="skill-row-tags">
+                    <span class="tag">🐍 Python</span> <span class="tag">🕸️ 基础网络爬虫</span> <span class="tag">📈 R Language</span> <span class="tag">🤖 AI智能体搭建&Skill编写</span>
                 </div>
             </div>
             
-            <div class="skill-category card">
-                <h4>💼 商业与战略软件</h4>
-                <div class="tags">
+            <div class="skill-row">
+                <div class="skill-row-header">
+                    <span>💼 商业与战略软件</span>
+                    <span class="skill-row-toggle">▾</span>
+                </div>
+                <div class="skill-row-tags">
                     <span class="tag">💡 Think-cell</span> <span class="tag">📗 WPS/Office计算机二级</span> <span class="tag">🗄️ CSMAR</span> <span class="tag">📊 宏微观经济分析</span>
                 </div>
             </div>
 
-            <div class="skill-category card">
-                <h4>🌐 语言能力</h4>
-                <div class="tags">
-                    <span class="tag">汉语普通话 (二级甲等)</span> <span class="tag">英语 (雅思: 7.0 | 六级: 564 | 四级: 550)</span> 
+            <div class="skill-row">
+                <div class="skill-row-header">
+                    <span>🌐 语言能力</span>
+                    <span class="skill-row-toggle">▾</span>
                 </div>
-            </div>
-            
-            <div class="skill-category card">
-                <h4>🏆 课外活动</h4>
-                <div style="font-size: 0.9rem; color: var(--text-muted);">
-                    🤝 南京大学学生会综合联络部核心成员 (2023.11 - 2024.11)。与30余家本地商户达成协同合作，并担任“十佳歌手”活动现场志愿者。
+                <div class="skill-row-tags">
+                    <span class="tag">汉语普通话 (二级甲等)</span> <span class="tag">英语 (雅思: 7.0 | 六级: 564 | 四级: 550)</span>
                 </div>
             </div>
         </div>
@@ -596,7 +613,7 @@
             </div>
             
             <div class="footer-bottom">
-                &copy; 2026 何金明。保留所有权利。
+                &copy; 2026 何金明保留所有权利
             </div>
         </div>
     </footer>
@@ -677,6 +694,13 @@
                         }, 300);
                     }
                 });
+            });
+        });
+
+        // Skills row collapse toggle
+        document.querySelectorAll('.skill-row-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.parentElement.classList.toggle('collapsed');
             });
         });
 
