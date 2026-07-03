@@ -8,7 +8,7 @@
     
     <style>
         /* Import classical woodblock-print serif font */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap');
 
         /* CSS Variables - Light Mode */
         :root {
@@ -49,6 +49,9 @@
         body, .card, nav, input, textarea, button, .badge, .tag, footer {
             transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
+
+        /* Offset for fixed nav when jumping to sections */
+        html { scroll-padding-top: 80px; scroll-behavior: smooth; }
 
         /* Typography */
         h1, h2, h3, h4 { font-weight: 600; line-height: 1.2; }
@@ -107,7 +110,7 @@
 
         /* Hero Section */
         .hero { padding-top: 13rem !important; padding-bottom: 8rem; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
-        .hero h1 { font-size: 3.5rem; letter-spacing: 0.04em; margin-bottom: 2rem; font-family: 'Noto Serif TC', 'WenYue GuDianMingChaoTi', 'STSong', 'SimSun', serif; font-weight: 600; }
+        .hero h1 { font-size: 3.5rem; letter-spacing: 0.04em; margin-bottom: 2rem; font-family: 'Noto Serif SC', 'PingFang SC', 'Microsoft YaHei', 'SimSun', serif; font-weight: 600; }
         .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin-bottom: 2.5rem; }
         
         .btn-primary { display: inline-block; background: var(--text-main); color: #fff; padding: 0.8rem 1.5rem; border-radius: 6px; font-weight: 500; margin-right: 1rem; transition: background 0.3s, color 0.3s; }
@@ -261,7 +264,7 @@
             </a>
             <div class="nav-links">
                 <a href="#about">关于</a>
-                <a href="#experience">经历</a>
+                <a href="#education">经历</a>
                 <a href="#skills">技能</a>
                 <a href="index.html" style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted); opacity: 0.6;">English</a>
                 <button id="theme-toggle" class="pill-btn" aria-label="Toggle Dark Mode">
@@ -273,7 +276,7 @@
     </nav>
 
     <section id="hero" class="hero container reveal">
-        <h1>連接數據科學<br>與金融戰略</h1>
+        <h1>连接数据科学<br>与金融战略</h1>
         <p>我是南京大学金融学在读本科生，刚刚结束在香港大学经管学院的交换学习。主攻金融建模、市场分析与战略咨询，擅长运用Python与AI智能体等工具将繁杂数据提炼为实用商业见解。</p>
         <div>
             <a href="#contact" class="btn-secondary">与我交流 &rarr;</a>
