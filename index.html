@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>He Jinming | Portfolio</title>
+    <meta name="description" content="Personal portfolio of He Jinming.">
+    
+    <style>
+        /* CSS Variables - Light Mode */
+        :root {
+            /* Surfaces */
+            --bg-color: #f8f8f7;
+            --card-bg: #fdfdfc;
+            --border-color: #e1e1e4;
+
+            /* Typography: intentionally avoid pure black / pure white */
+            --text-main: #3f3f46;
+            --text-muted: #667085;
+            --text-on-accent: #f4f4f5;
+
+            /* Strong buttons */
+            --strong-bg: #3f3f46;
+            --strong-bg-hover: #52525b;
+            --text-on-strong: #f4f4f5;
+
+            /* Accent */
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+
+            --font-family: Aptos, "Aptos Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --transition-speed: 0.3s;
+        }
+
+        /* CSS Variables - Dark Mode */
+        html[data-theme="dark"] {
+            /* Surfaces */
+            --bg-color: #111113;
+            --card-bg: #1b1b1e;
+            --border-color: #2c2c30;
+
+            /* Typography: soft light grays instead of pure white */
+            --text-main: #e4e4e7;
+            --text-muted: #a1a1aa;
+            --text-on-accent: #f1f1f3;
+
+            /* Strong buttons */
+            --strong-bg: #dedee3;
+            --strong-bg-hover: #c8c8cf;
+            --text-on-strong: #2f2f33;
+
+            /* Accent */
+            --accent-color: #60a5fa;
+            --accent-hover: #93bbfd;
+        }
+
+        /* Base Styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Smooth Dark Mode Transitions */
+        body, .card, nav, input, textarea, button, .badge, .tag, footer {
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        /* Offset for fixed nav when jumping to sections */
+        html { scroll-padding-top: 80px; scroll-behavior: smooth; }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-weight: 600; line-height: 1.2; }
+        a { color: var(--accent-color); text-decoration: none; transition: color var(--transition-speed); }
+        a:hover { color: var(--accent-hover); }
+
+        /* Layout & Container */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(248, 248, 247, 0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+        html[data-theme="dark"] nav { background: rgba(17, 17, 19, 0.92); }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links > a { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+        .nav-links > a:hover { color: var(--text-main); }
+        
+        .controls { display: flex; gap: 0.6rem; align-items: center; }
+        .pill-btn {
+            background: none; border: 1px solid var(--border-color);
+            padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer;
+            font-size: 0.8rem; font-weight: 600; color: var(--text-main);
+            transition: all var(--transition-speed);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
+        }
+        .pill-btn:hover { background: var(--border-color); }
+        #theme-toggle { padding: 0.4rem; border-radius: 50%; width: 34px; height: 34px; }
+
+        /* Sections & Spacing */
+        section { 
+            padding: 5rem 2rem 6rem 2rem !important;
+            border-bottom: 1px solid var(--border-color); 
+        }
+        section:last-of-type { border-bottom: none; }
+        .section-header { margin-bottom: 2.5rem; }
+        .section-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .section-title { font-size: 2.2rem; color: var(--text-main); }
+
+        /* Hero Section */
+        .hero { padding-top: 13rem !important; padding-bottom: 8rem; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+        .hero h1 { font-size: 2.8rem; letter-spacing: -0.02em; margin-bottom: 2rem; font-family: 'Georgia', 'Times New Roman', serif; font-style: italic; font-weight: 400; }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin-bottom: 2.5rem; }
+        
+        .btn-primary {
+            display: inline-block;
+            background: var(--strong-bg);
+            color: var(--text-on-strong);
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            margin-right: 1rem;
+            transition: background 0.3s, color 0.3s;
+        }
+        .btn-primary:hover { background: var(--strong-bg-hover); color: var(--text-on-strong); } /* Softened Hover */
+        
+        .btn-secondary { display: inline-block; color: var(--text-main); font-weight: 500; transition: color 0.3s; }
+        .btn-secondary:hover { color: var(--accent-color); }
+
+        /* Badge Styling */
+        .badge-container { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2rem; }
+        .badge {
+            font-size: 0.9rem; padding: 0.4rem 1rem;
+            background: rgba(37, 99, 235, 0.06);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            color: var(--accent-color);
+            border-radius: 20px; font-weight: 500;
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+        html[data-theme="dark"] .badge {
+            background: rgba(96,165,250,0.1);
+            border-color: rgba(96,165,250,0.2);
+            color: var(--accent-color);
+        }
+
+        /* Card System */
+        .card-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        @media (min-width: 768px) {
+            .card-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.2rem; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.04); border-color: #d4d4d8; }
+        html[data-theme="dark"] .card:hover { border-color: #3f3f46; box-shadow: 0 12px 24px rgba(0,0,0,0.4); }
+        
+        .card-meta { margin-bottom: 1.2rem; }
+        .card-date { font-size: 0.85rem; font-weight: 600; color: var(--text-main); }
+        .card-location { font-size: 0.85rem; color: var(--text-muted); }
+        
+        .card-title { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .project-link {
+            display: inline-flex; align-items: center; align-self: flex-start;
+            margin-top: -0.1rem; margin-bottom: 0.9rem;
+            color: var(--accent-color); font-size: 0.78rem; font-weight: 600;
+            text-decoration: none; transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .project-link:hover { transform: translateX(3px); opacity: 0.82; }
+        .card-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.2rem; font-weight: 500; }
+        .card-body { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: auto; }
+
+        /* Highlight box in card (Awards) */
+        .card-award {
+            margin-top: 1.2rem; display: inline-flex; align-self: flex-start;
+            background: #f0fdf4; color: #166534; padding: 0.3rem 0.8rem; 
+            border-radius: 8px; font-size: 0.8rem; font-weight: 600;
+            border: 1px solid rgba(22, 101, 52, 0.1);
+        }
+        html[data-theme="dark"] .card-award {
+            background: rgba(34,197,94,0.1); color: #4ade80; border-color: rgba(74,222,128,0.15);
+        }
+        
+        /* Tags */
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+        .tag { background: #f4f4f5; color: var(--text-muted); font-size: 0.75rem; padding: 0.3rem 0.7rem; border-radius: 6px; }
+        html[data-theme="dark"] .tag { background: #27272a; color: #a1a1aa; }
+
+        /* Project Filter Pills */
+        .filter-container { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .filter-pill {
+            display: inline-block; padding: 0.4rem 1.1rem; border-radius: 20px;
+            border: 1px solid var(--border-color); background: transparent;
+            color: var(--text-muted); font-size: 0.85rem; font-weight: 500;
+            font-family: var(--font-family); cursor: pointer; transition: all 0.3s;
+        }
+        .filter-pill:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .filter-pill.active { background: var(--accent-color); color: var(--text-on-accent); border-color: var(--accent-color); }
+        
+        .card-grid .card { transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease; }
+        .card.hidden { opacity: 0; transform: scale(0.95); pointer-events: none; }
+
+        /* Timeline / Experience Accordion */
+        .timeline { border-left: 2px solid var(--border-color); padding-left: 2rem; margin-left: 1rem; }
+        html[data-theme="dark"] .timeline { border-color: var(--border-color); }
+        
+        .timeline-item { position: relative; margin-bottom: 3.5rem; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -2.45rem; top: 0.4rem;
+            width: 12px; height: 12px; background: var(--card-bg);
+            border: 2px solid var(--text-muted); border-radius: 50%; transition: border-color 0.3s;
+        }
+        html[data-theme="dark"] .timeline-item::before { background: var(--card-bg); border-color: var(--text-muted); }
+        .timeline-item:hover::before { border-color: var(--accent-color); }
+        
+        .timeline-header { position: relative; padding-right: 2rem; }
+        .timeline-date { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .accordion-text {
+            font-size: 0.8rem; font-weight: 500; color: var(--accent-color);
+            cursor: pointer; user-select: none; white-space: nowrap;
+        }
+        
+        .timeline-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
+
+        
+        .timeline-content {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .timeline-item.expanded .timeline-content { max-height: 800px; }
+
+        /* Experience section always visible */
+        #experience .timeline-content { max-height: none; overflow: visible; }
+
+        .timeline-content .card-subtitle { margin-top: 1rem; }
+
+        #projects .tag { font-style: italic; }
+
+        /* Skills Compact Layout */
+        .skills-compact {
+            display: flex; flex-direction: column;
+            border: 1px solid var(--border-color); border-radius: 12px;
+            overflow: hidden;
+        }
+        .skill-row {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .skill-row:last-child { border-bottom: none; }
+        .skill-row-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 1.2rem;
+            cursor: pointer; user-select: none;
+            font-weight: 600; font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        .skill-row-header:hover { background: rgba(37, 99, 235, 0.04); }
+        html[data-theme="dark"] .skill-row-header:hover { background: rgba(96, 165, 250, 0.06); }
+        .skill-row-toggle {
+            font-size: 0.7rem; color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+        .skill-row.collapsed .skill-row-toggle { transform: rotate(-90deg); }
+        .skill-row-tags {
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+            padding: 0 1.2rem 0.8rem;
+            max-height: 200px; overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .skill-row.collapsed .skill-row-tags {
+            max-height: 0; padding-top: 0; padding-bottom: 0;
+        }
+
+        /* Footer & Contact */
+        footer { padding: 6rem 0 4rem 0; background-color: #f8f8f9; border-top: 1px solid var(--border-color); }
+        html[data-theme="dark"] footer { background-color: #0a0a0a; }
+        .footer-content { max-width: 900px; margin: 0 auto; padding: 0 2rem; text-align: center; }
+        .footer-title { font-size: 1.8rem; font-weight: 600; margin-bottom: 3rem; color: var(--text-main); }
+        
+        .contact-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; margin-bottom: 4rem; }
+        .contact-item { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; min-width: 100px; position: relative; }
+        .contact-icon { width: 56px; height: 56px; background: var(--card-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); color: var(--text-main); transition: all 0.3s; border: 1px solid var(--border-color); }
+        .contact-item:hover .contact-icon { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15); color: var(--accent-color); transform: scale(1.05); border-color: var(--accent-color); }
+        .contact-icon svg { width: 26px; height: 26px; fill: currentColor; }
+        
+        .contact-label { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); transition: opacity 0.3s, color 0.3s; }
+        
+        .contact-info { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 0.8rem; font-weight: 600; color: var(--accent-color); opacity: 0; transition: all 0.3s; pointer-events: none; }
+        .contact-item:hover .contact-info { opacity: 1; bottom: -20px; }
+        .contact-item:hover .contact-label { opacity: 0; }
+
+        .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 2rem; color: var(--text-muted); font-size: 0.85rem; }
+
+        /* Animation */
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <script>
+        // Inline script to prevent flash of incorrect theme on load
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+
+    <nav>
+        <div class="container nav-content">
+            <a href="#" style="font-weight: 700; color: var(--text-main); font-size: 1.1rem;">
+                He Jinming
+            </a>
+            <div class="nav-links">
+                <a href="#education">Education</a>
+                <a href="#experience">Experience</a>
+                <a href="#technical-skills">Skills</a>
+                <a href="zh.html" style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted); opacity: 0.6;">中文</a>
+                <button id="theme-toggle" class="pill-btn" aria-label="Toggle Dark Mode">
+                        <svg id="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                        <svg id="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="hero container reveal">
+        <h1>Bridging Data Science <br>and Financial Strategy</h1>
+        <p>I am an undergraduate student at Nanjing University majoring in Finance, just finishing my exchange study at HKU Business School. I focus on financial modeling, market analysis, and management consulting, leveraging tools like Python and AI agents to distill complex data into practical business insights.</p>
+        <div class="badge-container">
+            <span class="badge">💼 <i>Mgmt. Consulting</i></span>
+            <span class="badge">📊 <i>Financial Modelling</i></span>
+            <span class="badge">💻 <i>Data Science</i></span>
+            <span class="badge">🌱 <i>ESG Integration</i></span>
+            <span class="badge">🪄 <i>AI Agent</i></span>
+            <span class="badge">🛠️ <i>Skills Dev & Application</i></span>
+        </div>
+        <div>
+            <a href="#contact" class="btn-secondary">Get in touch &rarr;</a>
+        </div>
+    </section>
+
+    <section id="education" class="container reveal">
+        <div class="section-header">
+            <span class="section-label">I. Education</span>
+            <h2 class="section-title">Education</h2>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div class="timeline-date">January 2026 – May 2026</div>
+                    <h3 class="card-title">The University of Hong Kong (Exchange)</h3>
+                </div>
+                <div class="timeline-content" style="max-height: 800px;">
+                    <div class="card-subtitle" style="margin-top: 0;">BEcon&Fin: Faculty of Business and Economics</div>
+                    <div class="card-body"><strong>Coursework:</strong> Venture Capital & Private Equity, NLP in Finance & FinTech</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div class="timeline-date">September 2023 – June 2027*</div>
+                    <h3 class="card-title">Nanjing University (Undergraduate)</h3>
+                </div>
+                <div class="timeline-content" style="max-height: 800px;">
+                    <div class="card-subtitle" style="margin-top: 0;">Business School, Major in Finance (GPA: 4.41/5.0, Rank: 14/34)</div>
+                    <div class="card-body">
+                        • <strong>Awards:</strong> People's Scholarship (Top 40%; 2024, 2025); 2nd Prize of National Undergraduate Mathematical Competition (2025)<br>
+                        • <strong>Coursework:</strong> Probability Theory & Mathematical Statistics (98), Statistics (95), Monetary Finance & Banking (93), Econometrics (93), Macro-Economics (91), Financial Economics (91), Linear Algebra (90), Calculus I & II
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="container reveal">
+        <div class="section-header">
+            <span class="section-label">II. Career</span>
+            <h2 class="section-title">Professional Experience</h2>
+        </div>
+        
+        <div class="timeline">
+            <!-- BCG Timeline Accordion -->
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div class="timeline-date">December 2025 – June 2026*</div>
+                    <h3 class="card-title">The Boston Consulting Group (BCG)</h3>
+                </div>
+                <div class="card-subtitle">Part-Time Assistant Program · Shanghai</div>
+                <div class="timeline-pills">
+                    <span class="tag">🏢 <i>Mgmt. Consulting</i></span>
+                    <span class="tag">🐍 <i>Python Scraping</i></span>
+                    <span class="tag">⚖️ <i>Regulatory Analysis</i></span>
+                    <span class="tag">🧭 <i>Customer Journey</i></span>
+                    <span class="tag">🏬 <i>Store Audit</i></span>
+                    <span class="tag">🤖 <i>AI Agents</i></span>
+                    <span class="tag">🛠️ <i>Skills Apps</i></span>
+                </div>
+                <div class="timeline-content">
+                    <div class="card-body">
+                        • <strong>Regulatory Data Analysis:</strong> Identified a post-2024 regulatory enforcement inflection point in China's pet food sector by scraping and analyzing sector-wide administrative penalty data with Python, equipping the team with a quantified risk baseline of the client's regulatory exposure<br><br>
+                        • <strong>Customer Journey Framework:</strong> Structured a 60-journey customer experience framework for a bank’s customer journey optimization by synthesizing three C-level interviews and desk research into actionable findings, supporting the team’s client deliverable through four rounds of partner feedback and iteration<br><br>
+                        • <strong>Field Store Visit:</strong> Audited in-store execution at a menswear brand against management's playbook on sales scripts and merchandising, and profiled four outdoor apparel competitors on product and material, delivering frontline evidence and market context that grounded the team's brand strategy
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tianfeng Timeline Accordion -->
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <div class="timeline-date">September 2025 – November 2025</div>
+                    <h3 class="card-title">Tianfeng Securities Co. Ltd.</h3>
+                </div>
+                <div class="card-subtitle">Intern in Fixed Income Research Group · Shanghai</div>
+                <div class="timeline-pills">
+                    <span class="tag">📊 <i>FICC Research</i></span>
+                    <span class="tag">🏛️ <i>LGFV Credit</i></span>
+                    <span class="tag">📈 <i>ETF Management</i></span>
+                    <span class="tag">💰 <i>Financing</i></span>
+                    <span class="tag">📋 <i>Market Reporting</i></span>
+                </div>
+                <div class="timeline-content">
+                    <div class="card-body">
+                        • <strong>Financing Cost Benchmarking:</strong> Distilled transcripts from 3 Hubei LGFV platforms (>RMB 250bn) into ~30k words of memos, benchmarking financing costs across bank, bond, non-standard, and trust channels to assess refinancing capacity, alongside credit research on 10 water utilities<br><br>
+                        • <strong>Market Tracking & Reporting:</strong> Managed a daily database of 53 bond ETFs across government, credit, and convertible bonds, tracking AUM, turnover, and volume, and produced 15+ market reports and 20+ credit briefings, developing real-time market sensitivity and risk monitoring discipline
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="container reveal">
+        <div class="section-header">
+            <span class="section-label">III. Selected Work</span>
+            <h2 class="section-title">Projects & Research</h2>
+        </div>
+
+        <div class="filter-container">
+            <span style="font-size: 0.78rem; color: var(--text-muted); margin-right: 0.4rem; display: flex; align-items: center;">Categorize:</span>
+            <button class="filter-pill active" data-filter="all">All</button>
+            <button class="filter-pill" data-filter="strategy">Strategy</button>
+            <button class="filter-pill" data-filter="esg">ESG</button>
+            <button class="filter-pill" data-filter="quant">Quant & Data</button>
+            <button class="filter-pill" data-filter="field-research">Field Research</button>
+        </div>
+
+        <div class="card-grid">
+            <div class="card" data-tags="strategy esg">
+                <div class="card-meta">
+                    <div class="card-date">May 2025</div>
+                    <div class="card-location">Beijing</div>
+                </div>
+                <h3 class="card-title">The 2025 “Bain Cup” Case Competition</h3>
+                <div class="card-body">
+                    • Analyzed AI-enabled ESG consulting in the renewable energy sector using CSMAR, Chindices, and IIGF data, and developed a framework of “Market Competition Analysis – Dual-line strategy – Strategy implementation” to formulate growth strategies<br>
+                    • Concluded that the client should develop online SaaS platforms and onsite AI server base stations, visualizing conclusions into 16 charts using Think-cell & Python for a 21-page deck
+                </div>
+                <div class="card-award">
+                    🏆 Outstanding Case Report, Top 10%
+                </div>
+                <div class="tags">
+                    <span class="tag">Strategy</span> <span class="tag">ESG</span> <span class="tag">Think-cell</span>
+                </div>
+            </div>
+
+            <div class="card" data-tags="esg quant">
+                <div class="card-meta">
+                    <div class="card-date">October 2024 – November 2025</div>
+                    <div class="card-location">Nanjing</div>
+                </div>
+                <h3 class="card-title">Smart Logistics & Environmental Performance</h3>
+                <div class="card-body">
+                    • Developed a “Company-City” ESG evaluation model from CSMAR manufacturing panel data (2010-2023) and a field study in Nanjing<br>
+                    • Identified ESG improvements driven by productivity gains and cost contraction, delivering 10+ analytical charts and a thematic report with detailed heterogeneity analysis
+                </div>
+                <div class="card-award">
+                    ⭐ Principal Investigator / "Yinxing Cup" Award
+                </div>
+                <div class="tags">
+                    <span class="tag">Quant Modeling</span> <span class="tag">CSMAR</span> <span class="tag">R</span>
+                </div>
+            </div>
+
+            <div class="card" data-tags="quant">
+                <div class="card-meta">
+                    <div class="card-date">August 2026</div>
+                    <div class="card-location">Independent Project</div>
+                </div>
+                <h3 class="card-title">NEEQ Annual Report Toolkit</h3>
+                <a class="project-link" href="https://github.com/iamjinminghe/NEEQ-Annual-Report-Toolkit" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                <div class="card-body">
+                    • Built an end-to-end pipeline for NEEQ annual reports, covering candidate consolidation, rule-based cleaning, exception-based manual review, PDF downloading, validation, and TXT conversion<br>
+                    • Established a reviewed final list as the single source of truth, distinguishing report bodies from summaries, correction notices, and revised filings while preserving an auditable workflow for downstream empirical and textual research
+                </div>
+                <div class="card-award">
+                    🏗️ Open-Source Research Tool
+                </div>
+                <div class="tags">
+                    <span class="tag">Python</span> <span class="tag">Data Pipeline</span> <span class="tag">Web Scraping</span> <span class="tag">Text Data</span>
+                </div>
+            </div>
+
+            <div class="card" data-tags="strategy quant">
+                <div class="card-meta">
+                    <div class="card-date">September 2026</div>
+                    <div class="card-location">Independent Project</div>
+                </div>
+                <h3 class="card-title">Consulting Interview Notes Agent Skill</h3>
+                <a class="project-link" href="https://github.com/iamjinminghe/consulting-interview-notes" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                <div class="card-body">
+                    • Built an Agent Skill that restructures raw, multi-speaker interview transcripts into concise, MECE, conclusion-driven consulting meeting notes organized by business logic rather than chronological Q&amp;A flow<br>
+                    • Encoded strict output rules including number preservation, management-language rewriting, minimal direct quotation, and zero fact fabrication to support more consistent consulting-style documentation
+                </div>
+                <div class="card-award">
+                    🧩 Open-Source Agent Skill
+                </div>
+                <div class="tags">
+                    <span class="tag">Agent Skill</span> <span class="tag">MECE</span> <span class="tag">LLM Workflow</span> <span class="tag">Consulting</span>
+                </div>
+            </div>
+
+            <div class="card" data-tags="quant ma">
+                <div class="card-meta">
+                    <div class="card-date">April 2026 – May 2026</div>
+                    <div class="card-location">Nanjing</div>
+                </div>
+                <h3 class="card-title">M&A and Restructuring in China’s Capital Market</h3>
+                <div class="card-body">
+                    • Contributed to a study covering 6 mainstream M&A models (including backdoor/cross-border), compared integration pathways across 3 listed companies, and co-authored a 50k-character report<br>
+                    • Analyzed Zhongji Innolight as a non-backdoor strategic transformation case, examining governance delegation, AI-driven tailwinds, and target quality to identify success conditions
+                </div>
+                <div class="tags" style="margin-top: 1.2rem;">
+                    <span class="tag">Corporate Finance</span> <span class="tag">M&A</span> <span class="tag">Metrics</span>
+                </div>
+            </div>
+
+            <div class="card" data-tags="field-research">
+                <div class="card-meta">
+                    <div class="card-date">August 2025</div>
+                    <div class="card-location">Malaysia</div>
+                </div>
+                <h3 class="card-title">Field Research on Investment Experience in “Belt and Road” Countries</h3>
+                <div class="card-body">
+                    Visited 10+ Chinese enterprises, 3 government agencies, and 2 universities across Malaysia Analyzed labor localization and technology transfer pathways through field research, identified a two-way adaptation logic, and co-authored a 40k-character thematic report
+                </div>
+                <div class="card-award">
+                    🌍 Top 10 Team / Key Project
+                </div>
+                <div class="tags">
+                    <span class="tag">Field Research</span> <span class="tag">Macro</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <span class="section-label" style="font-size: 0.95rem; text-transform: none; letter-spacing: 0.03em;">AI Skills</span>
+            <h3 style="font-size: 1.1rem; color: var(--text-muted); font-weight: 500; margin-bottom: 1.5rem; margin-top: 0.25rem;">Custom AI Agents & Tools</h3>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h3 class="card-title">🤖 Finals Preparation</h3>
+                <div class="card-body">
+                    AI-powered study assistant for financial engineering coursework, automating structured review notes, calculator programming, and mock exam generation
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="card-title">📝 CV Bullet Generator</h3>
+                <div class="card-body">
+                    STAR-format resume bullet generator calibrated to MBB consulting standards, producing concise, data-backed achievement statements from raw input
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="card-title">📋 Consulting Notes</h3>
+                <div class="card-body">
+                    Meeting note synthesis tool following BCG-style frameworks, converting raw interview transcripts into structured consulting memos with actionable findings
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="technical-skills" class="container reveal">
+        <div class="section-header">
+            <span class="section-label">IV. Toolbox</span>
+            <h2 class="section-title">Technical Skills</h2>
+        </div>
+        
+        <div class="skills-compact">
+            <div class="skill-row">
+                <div class="skill-row-header">
+                    <span>💻 Data & Programming</span>
+                    <span class="skill-row-toggle">▾</span>
+                </div>
+                <div class="skill-row-tags">
+                    <span class="tag">🐍 <i>Python</i></span> <span class="tag">🕸️ <i>Web Scraping</i></span> <span class="tag">📈 <i>R Language</i></span> <span class="tag">🤖 <i>AI Agent Construction</i></span>
+                </div>
+            </div>
+            
+            <div class="skill-row">
+                <div class="skill-row-header">
+                    <span>💼 Business & Strategy</span>
+                    <span class="skill-row-toggle">▾</span>
+                </div>
+                <div class="skill-row-tags">
+                    <span class="tag">💡 <i>Think-cell</i></span> <span class="tag">📗 <i>Advanced Excel</i></span> <span class="tag">🗄️ <i>CSMAR</i></span> <span class="tag">📊 <i>Macro/Micro Economics</i></span>
+                </div>
+            </div>
+
+            <div class="skill-row">
+                <div class="skill-row-header">
+                    <span>🌐 Languages</span>
+                    <span class="skill-row-toggle">▾</span>
+                </div>
+                <div class="skill-row-tags">
+                    <span class="tag">Mandarin Chinese (Native)</span> <span class="tag">English (IELTS: 7.0, CET-6: 564)</span> <span class="tag">Cantonese (Elementary)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content reveal">
+            <h2 class="footer-title">Let’s Connect</h2>
+            
+            <div class="contact-grid">
+                <a href="https://www.linkedin.com/in/jinming-he-85582b392/" target="_blank" class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </div>
+                    <span class="contact-label">LinkedIn</span>
+                    <span class="contact-info">Jinming He</span>
+                </a>
+
+                <a href="mailto:chinming_he@smail.nju.edu.cn" class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </div>
+                    <span class="contact-label">Email</span>
+                    <span class="contact-info">chinming_he@smail.nju.edu.cn</span>
+                </a>
+
+                <a href="https://wa.me/85265731686" target="_blank" class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                    </div>
+                    <span class="contact-label">WhatsApp</span>
+                    <span class="contact-info">+852 6573 1686</span>
+                </a>
+
+                <div class="contact-item" style="cursor: pointer;">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 576 512" fill="currentColor"><path d="M385.2 167.6c6.4 0 12.6 .3 18.8 1.1C387.4 90.3 303.3 32 207.7 32 100.5 32 13.5 104.4 13.5 194.6c0 54.2 32 101.5 82.8 131.8-1.9 5.3-5.2 14.5-5.2 14.5s-6.6 20.3-8.5 27.6c-1.5 5.5 1.6 7.4 5.9 4.3 0 0 31.6-17.7 48.7-27.4 17.5 4.6 36.3 7 55.6 7 2.3 0 4.6-.1 6.8-.1-12.8-17.8-20.3-39.7-20.3-63.3 0-61.9 50.2-111.4 112.5-111.4h93.4zm-225-45.3c15.5 0 28.2 12.7 28.2 28.3 0 15.6-12.7 28.3-28.2 28.3-15.5 0-28.2-12.7-28.2-28.3 0-15.6 12.7-28.3 28.2-28.3zm122 0c15.5 0 28.2 12.7 28.2 28.3 0 15.6-12.7 28.3-28.2 28.3-15.5 0-28.2-12.7-28.2-28.3 0-15.6 12.7-28.3 28.2-28.3zM562.5 317.5c0-59.4-56.4-107.5-125.9-107.5-69.5 0-125.9 48.1-125.9 107.5 0 59.4 56.4 107.5 125.9 107.5 18 0 35.5-3.8 51.5-10.7 15.1 8.5 42.6 23.9 42.6 23.9 3.8 2.7 6.6 1.1 5.4-3.7-.6-2.5-6-17.5-7.7-22.3 44.5-26 74.1-66.2 74.1-114.7zm-162-30.8c11 0 20 9 20 20.1 0 11.1-9 20.1-20 20.1-11 0-20-9-20-20.1 0-11.1 9-20.1 20-20.1zm84.4 0c11 0 20 9 20 20.1 0 11.1-9 20.1-20 20.1-11 0-20-9-20-20.1 0-11.1 9-20.1 20-20.1z"/></svg>
+                    </div>
+                    <span class="contact-label">WeChat</span>
+                    <span class="contact-info">hejinmingnju</span>
+                </div>
+
+                <div class="contact-item" style="cursor: pointer;">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>
+                    </div>
+                    <span class="contact-label">Phone</span>
+                    <span class="contact-info">+86 182-7531-6342</span>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                &copy; 2026 He Jinming All rights reserved
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set Theme Icons
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('icon-sun');
+        const moonIcon = document.getElementById('icon-moon');
+
+        function updateIcons(theme) {
+            if (theme === 'dark') {
+                sunIcon.style.display = 'inline-block';
+                moonIcon.style.display = 'none';
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'inline-block';
+            }
+        }
+        
+        updateIcons(document.documentElement.getAttribute('data-theme') || 'light');
+
+        themeToggle.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateIcons(newTheme);
+        });
+
+        // Experience Accordion (only trigger on accordion-text click)
+        const accordionTexts = document.querySelectorAll('#experience .accordion-text');
+        accordionTexts.forEach(textEl => {
+            textEl.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const item = textEl.closest('.timeline-item');
+                const isExpanded = item.classList.contains('expanded');
+                // Collapse all
+                accordionTexts.forEach(t => {
+                    const parentItem = t.closest('.timeline-item');
+                    parentItem.classList.remove('expanded');
+                    t.textContent = t.getAttribute('data-collapsed');
+                });
+                // Expand the clicked one if it wasn't already open
+                if (!isExpanded) {
+                    item.classList.add('expanded');
+                    textEl.textContent = textEl.getAttribute('data-expanded');
+                }
+            });
+        });
+
+        // Project Filters
+        const filterPills = document.querySelectorAll('.filter-pill');
+        const projectCards = document.querySelectorAll('#projects .card');
+
+        filterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                filterPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                
+                const filter = pill.getAttribute('data-filter');
+                
+                projectCards.forEach(card => {
+                    const tags = card.getAttribute('data-tags') || '';
+                    
+                    if (filter === 'all' || tags.includes(filter)) {
+                        card.style.display = 'flex';
+                        // Force a reflow
+                        void card.offsetWidth;
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                        setTimeout(() => {
+                            if (card.classList.contains('hidden')) {
+                                card.style.display = 'none';
+                            }
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Skills row collapse toggle
+        document.querySelectorAll('.skill-row-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.parentElement.classList.toggle('collapsed');
+            });
+        });
+
+        // Scroll Reveal Animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => { revealOnScroll.observe(reveal); });
+        });
+    </script>
+</body>
+</html>
