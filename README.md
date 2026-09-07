@@ -8,6 +8,10 @@ A minimal, bilingual (English / 中文), fully responsive personal portfolio for
 
 ---
 
+## Preview
+
+![CV Preview](https://image.thum.io/get/width/1200/crop/900/https://iamjinminghe.github.io/CV)
+
 ## ✨ Features
 
 - **Bilingual pages** — English (`index.html`) and Chinese (`zh.html`) with one-click switching.
