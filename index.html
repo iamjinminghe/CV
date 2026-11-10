@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Jinming He is a finance undergraduate at Nanjing University with research experience in technological innovation, corporate finance, and applied econometrics.">
   <meta name="color-scheme" content="light">
-  <title>Jinming He | Nanjing University</title>
+  <title>Jinming He | Finance & Econometrics</title>
   <style>
     @font-face {
       font-family: "Name DIN";
@@ -81,7 +81,17 @@
     }
     .jump { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; margin-top: 1.4rem; }
     .action { font-size: 1.125rem; font-weight: 600; }
-    .arrow { display: inline-block; margin-inline-start: .22rem; }
+    .arrow {
+      width: .85em;
+      height: .85em;
+      margin-inline-start: .22rem;
+      vertical-align: -.08em;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
     section {
       border-top: 1px solid var(--rule);
@@ -145,7 +155,6 @@
     <nav class="wrap" aria-label="Main navigation">
       <a href="#research">Research</a>
       <a href="#education">Education</a>
-      <a href="#honors">Honors</a>
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -162,8 +171,8 @@
         <li>Applied Econometrics</li>
       </ul>
       <p class="jump">
-        <a class="action" href="#research">Explore my research <span class="arrow" aria-hidden="true">↘</span></a>
-        <a class="action" href="#contact">Email <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="action" href="#research">Explore my research <svg class="arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8m-6 0h6V6"/></svg></a>
+        <a class="action" href="#contact">Email <svg class="arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12l8-8M6 4h6v6"/></svg></a>
       </p>
     </div>
 
@@ -243,9 +252,4 @@
     </section>
   </main>
 
-  <footer class="wrap contact" id="contact" aria-labelledby="contact-title">
-    <h2 id="contact-title">Contact</h2>
-    <p class="email"><a class="action" href="mailto:chinming_he@smail.nju.edu.cn">chinming_he@smail.nju.edu.cn <span class="arrow" aria-hidden="true">↗</span></a></p>
-  </footer>
-</body>
-</html>
+  <footer class="wrap contact" id="contact" aria-labelledby="contac
