@@ -129,7 +129,10 @@
     @media (max-width: 43rem) {
       html { scroll-padding-top: 7rem; }
       .wrap { width: calc(100% - 2rem); }
-      nav { column-gap: 1.05rem; }
+      .masthead nav { padding-block: .85rem; }
+      nav { column-gap: clamp(.6rem, 3vw, 1.05rem); font-size: 1rem; }
+      .contact { margin-bottom: calc(2rem + env(safe-area-inset-bottom, 0px)); }
+      .email a { font-size: 1rem; overflow-wrap: anywhere; }
     }
 
     @media print {
@@ -154,8 +157,8 @@
   <header class="masthead">
     <nav class="wrap" aria-label="Main navigation">
       <a href="#research">Research</a>
-      <a href="#education">Education</a>
       <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -182,26 +185,47 @@
         <article class="entry">
           <h3>Global Patent Network &amp; Technology Innovation Research Group</h3>
           <p class="role">Research Assistant</p>
-          <p class="advisors">Advisors · Prof. Tang Taijie and Prof. Xu Yonghao</p>
-          <p class="date">Sep 2026 – Present</p>
+          <p class="advisors">Advisors: Prof. Tang Taijie and Prof. Xu Yonghao</p>
+          <p class="date">September 2026 – Present</p>
           <p class="detail">I extract IPC codes, assignees, and citation links from global patent records in Python. I constructed forward citation measures for cross-country comparisons, accounting for changes in citation coverage over time.</p>
           <p class="detail">I am also testing a Python pipeline that uses TF-IDF and cosine similarity to develop forward and backward measures of patent text similarity.</p>
         </article>
         <article class="entry">
           <h3>Determinants of Firms’ Green Innovation Choices</h3>
           <p class="role">Team Member &amp; Research Assistant</p>
-          <p class="advisors">Advisor · Prof. Tang Taijie</p>
-          <p class="date">Sep 2025 – Present</p>
+          <p class="advisors">Advisor: Prof. Tang Taijie</p>
+          <p class="date">September 2025 – Present</p>
           <p class="detail">I built Python scripts to collect annual reports from NEEQ-listed firms, ESG reports from Chinese A-share firms, and papers published in <em>Review of Accounting Studies</em> from 2000 to 2013.</p>
           <p class="detail">I also replicated and updated tables from two <em>Journal of Corporate Finance</em> studies on Chinese corporate governance, capital markets, and corporate financial policies. I presented papers on innovation, governance, and empirical methods in research group meetings.</p>
         </article>
         <article class="entry">
           <h3>Smart Logistics and Environmental Performance</h3>
           <p class="role">Team Lead · University-funded study</p>
-          <p class="advisors">Advisor · Prof. Xiangnian Kong</p>
-          <p class="date">Oct 2024 – Nov 2025</p>
+          <p class="advisors">Advisor: Prof. Xiangnian Kong</p>
+          <p class="date">October 2024 – November 2025</p>
           <p class="detail">I led a study using 2010–2023 CSMAR manufacturing data and a difference-in-differences design to estimate the effect of China’s 2016 smart-logistics pilot on firms’ environmental ESG performance.</p>
           <p class="detail">We examined cost reduction, earnings-risk control, and green innovation as possible channels, assessed differences by firm size and region, and ran parallel-trends and placebo tests. The team received an award at Nanjing University’s Yinxing Cup.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" aria-labelledby="projects-title">
+      <h2 id="projects-title">Selected Projects</h2>
+      <div class="entries">
+        <article class="entry">
+          <h3>M&amp;A and Restructuring in China’s Capital Market</h3>
+          <p class="role">Team Member</p>
+          <p class="advisors">Advisor: Prof. Qiang Geng</p>
+          <p class="date">April – May 2026</p>
+          <p class="detail">Compared six approaches to M&amp;A and restructuring, with a focus on deal structure and post-acquisition governance in Zhongji Innolight’s shift from motor manufacturing to optical transceivers.</p>
+        </article>
+        <article class="entry">
+          <h3>China–Malaysia Field Research on Belt and Road Investment</h3>
+          <p class="role">Team Member</p>
+          <p class="advisors">Advisor: Prof. Jianghuai Zheng</p>
+          <p class="date">August 2025</p>
+          <p class="detail">Co-authored a field report on local hiring and technology transfer in Malaysia. We documented how Alliance Steel recruited some technical staff from China and how CETSC trained new hires in China before pairing them with experienced colleagues in Malaysia.</p>
+          <p class="detail">The report won third prize in Nanjing University’s second “Mantianxing” Field Research Report Competition.</p>
         </article>
       </div>
     </section>
@@ -212,13 +236,13 @@
         <article class="entry">
           <h3>Nanjing University</h3>
           <p class="role">Undergraduate, Finance · GPA 4.41/5.0</p>
-          <p class="date">Sep 2023 – Jun 2027 (expected)</p>
+          <p class="date">September 2023 – June 2027 (expected)</p>
           <p class="detail"><strong>Selected coursework.</strong> Probability Theory and Mathematical Statistics (98), Statistics (95), Econometrics (93), Financial Economics (91), Linear Algebra (90), and Calculus I &amp; II.</p>
         </article>
         <article class="entry">
           <h3>The University of Hong Kong</h3>
           <p class="role">Exchange student, Economics and Finance</p>
-          <p class="date">Jan – May 2026</p>
+          <p class="date">January – May 2026</p>
         </article>
       </div>
     </section>
@@ -228,28 +252,14 @@
       <ul class="honors">
         <li>Second Prize, National Undergraduate Mathematical Competition (2025)</li>
         <li>The People’s Scholarship, Nanjing University (2024, 2025)</li>
+        <li>Chenggong Lizhi Mantianxing Field Study Scholarship (Third Tier, Team Award, 2025)</li>
       </ul>
-    </section>
-
-    <section id="projects" aria-labelledby="projects-title">
-      <h2 id="projects-title">Selected Projects</h2>
-      <div class="entries">
-        <article class="entry">
-          <h3>M&amp;A and Restructuring in China’s Capital Market</h3>
-          <p class="role">Team Member</p>
-          <p class="advisors">Advisor · Prof. Qiang Geng</p>
-          <p class="date">Apr – May 2026</p>
-          <p class="detail">Compared six approaches to M&amp;A and restructuring, with a focus on deal structure and post-acquisition governance in Zhongji Innolight’s shift from motor manufacturing to optical transceivers.</p>
-        </article>
-        <article class="entry">
-          <h3>China–Malaysia Field Research on Belt and Road Investment</h3>
-          <p class="role">Team Member</p>
-          <p class="advisors">Advisor · Prof. Jianghuai Zheng</p>
-          <p class="date">Aug 2025</p>
-          <p class="detail">Co-authored a field report on local hiring and technology transfer in Malaysia. We documented how Alliance Steel recruited some technical staff from China and how CETSC trained new hires in China before pairing them with experienced colleagues in Malaysia.</p>
-        </article>
-      </div>
     </section>
   </main>
 
-  <footer class="wrap contact" id="contact" aria-labelledby="contac
+  <footer class="wrap contact" id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Contact</h2>
+    <p class="email"><a class="action" href="mailto:chinming_he@smail.nju.edu.cn">chinming_he@smail.nju.edu.cn <svg class="arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12l8-8M6 4h6v6"/></svg></a></p>
+  </footer>
+</body>
+</html>
